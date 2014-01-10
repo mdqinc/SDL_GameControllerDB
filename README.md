@@ -1,7 +1,7 @@
 ##SDL_GameControllerDB
 
 
-A community source database of game controller bindings to be used with SDL2 Game Controller functionality.
+A community source database of game controller mappings to be used with SDL2 Game Controller functionality.
 
 ####Usage:
 
