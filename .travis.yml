@@ -1,0 +1,3 @@
+language: python
+python: 3.5
+script: ./check.py gamecontrollerdb.txt
