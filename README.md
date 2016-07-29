@@ -1,6 +1,6 @@
 ##SDL_GameControllerDB
 
-[![Build Status](https://travis-ci.org/meghprkh/SDL_GameControllerDB.svg?branch=master)](https://travis-ci.org/meghprkh/SDL_GameControllerDB)
+[![Build Status](https://travis-ci.org/gabomdq/SDL_GameControllerDB.svg?branch=master)](https://travis-ci.org/gabomdq/SDL_GameControllerDB)
 
 A community source database of game controller mappings to be used with SDL2 Game Controller functionality.
 
