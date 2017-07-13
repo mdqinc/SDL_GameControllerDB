@@ -93,6 +93,7 @@ d8140862000000000000504944564944,HitBox Edition Cthulhu+,a:b1,b:b2,x:b0,y:b3,bac
 0d0f5e00000000000000504944564944,Fighting Commander 4,a:b1,b:b2,x:b0,y:b3,back:b8,guide:b12,start:b9,leftstick:b10,rightstick:b11,leftshoulder:b5,rightshoulder:b4,dpup:h0.1,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,leftx:a0,lefty:a1,rightx:a2,righty:a5,lefttrigger:a4,righttrigger:a3,platform:Windows,
 300f1210000000000000504944564944,QanBa Joystick Plus,a:b0,b:b1,x:b2,y:b3,start:b9,leftshoulder:b4,rightshoulder:b5,dpup:h0.1,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,platform:Windows,
 300f1611000000000000504944564944,QanBa Arcade JoyStick 4018,a:b1,b:b2,x:b0,y:b3,back:b10,guide:b9,start:b8,leftshoulder:b4,rightshoulder:b5,dpup:h0.1,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,lefttrigger:b6,righttrigger:b7,platform:Windows,
+bd1215d0000000000000504944564944,Nintendo Retrolink USB Super SNES Classic Controller,y:b0,b:b1,a:b2,x:b3,leftshoulder:b4,rightshoulder:b5,start:b9,back:b8,leftx:a0,lefty:a1,platform:Windows,
 
 # OS X
 0500000047532047616d657061640000,GameStop Gamepad,a:b0,b:b1,back:b8,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,guide:,leftshoulder:b4,leftstick:b10,lefttrigger:b6,leftx:a0,lefty:a1,rightshoulder:b5,rightstick:b11,righttrigger:b7,rightx:a2,righty:a3,start:b9,x:b2,y:b3,platform:Mac OS X,
