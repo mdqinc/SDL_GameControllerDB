@@ -71,5 +71,7 @@ for line in fileinput.input():
     check_guid(splitted[0])
     check_mapping(splitted[2])
 
-if not success:
+if success:
+    print("No mapping errors found!")
+else:
     sys.exit(1)
