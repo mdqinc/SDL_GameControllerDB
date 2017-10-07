@@ -86,14 +86,17 @@ def has_duplicate(guids):
     seen_twice = set( x for x in guids if x in seen or seen_add(x) )
     return len(seen_twice) != 0
 
+entry_dict = dict()
 dupe_dict = defaultdict(list)
-def check_duplicates(guid, platform):
+def check_duplicates(guid, platform, entry):
     guids = list(dupe_dict[platform])
     guids.append(guid)
     if has_duplicate(guids):
-        error("Duplicate entry : ")
+        error("\nDuplicate entry : ")
+        print("Original : \n" + entry_dict[guid])
     else:
         dupe_dict[platform].append(guid)
+        entry_dict[guid] = entry
 
 for line in fileinput.input():
     if line.startswith('#') or line == '\n':
@@ -104,7 +107,7 @@ for line in fileinput.input():
         error ("Either GUID/Name/Mappingstring is missing or empty")
     check_guid(splitted[0])
     check_mapping(splitted[2])
-    check_duplicates(splitted[0], get_platform(splitted[2]))
+    check_duplicates(splitted[0], get_platform(splitted[2]), line)
 
 if not success:
     sys.exit(1)
