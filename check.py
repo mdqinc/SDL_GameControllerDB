@@ -7,12 +7,18 @@ from collections import defaultdict
 import collections
 
 success = True
+current_line = ""
+entry_dict = defaultdict(tuple)
+dupe_dict = defaultdict(list)
+
+def get_current_line():
+    return current_line
 
 def error (message):
-    global success;
+    global success
     success = False
-    print("Error at #" + str(fileinput.lineno()), ":", message)
-    print(line)
+    print("Error at line #" + str(fileinput.lineno()), ":", message)
+    print(get_current_line())
 
 def check_guid (guid):
     if len (guid) != 32:
@@ -86,30 +92,37 @@ def has_duplicate(guids):
     seen_twice = set( x for x in guids if x in seen or seen_add(x) )
     return len(seen_twice) != 0
 
-entry_dict = dict()
-dupe_dict = defaultdict(list)
-def check_duplicates(guid, platform, entry):
+def check_duplicates(guid, platform):
     guids = list(dupe_dict[platform])
     guids.append(guid)
     if has_duplicate(guids):
-        error("\nDuplicate entry : ")
-        print("Original : \n" + entry_dict[guid])
+        error("\nDuplicate entry :")
+        print("Original at line #" + entry_dict[guid][0] +
+                ":\n" + entry_dict[guid][1])
     else:
         dupe_dict[platform].append(guid)
-        entry_dict[guid] = entry
+        entry_dict[guid] = (str(fileinput.lineno()), get_current_line())
 
-for line in fileinput.input():
-    if line.startswith('#') or line == '\n':
-        continue
-    splitted = line[:-1].split(',', 2)
-    if len(splitted) < 3 or not splitted[0] or not splitted[1] \
-        or not splitted[2]:
-        error ("Either GUID/Name/Mappingstring is missing or empty")
-    check_guid(splitted[0])
-    check_mapping(splitted[2])
-    check_duplicates(splitted[0], get_platform(splitted[2]), line)
+def do_tests():
+    global current_line
+    for line in fileinput.input():
+        current_line = line
+        if line.startswith('#') or line == '\n':
+            continue
+        splitted = line[:-1].split(',', 2)
+        if len(splitted) < 3 or not splitted[0] or not splitted[1] \
+            or not splitted[2]:
+            error ("Either GUID/Name/Mappingstring is missing or empty")
+        check_guid(splitted[0])
+        check_mapping(splitted[2])
+        check_duplicates(splitted[0], get_platform(splitted[2]))
 
-if success:
-    print("No mapping errors found.")
-else:
-    sys.exit(1)
+def main():
+    do_tests()
+    if success:
+        print("No mapping errors found.")
+    else:
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()
