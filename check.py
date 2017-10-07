@@ -67,6 +67,17 @@ def check_mapping (mappingstring):
                            "\". Dpad position \"" + dpad_position + "\" " +
                            "should be one of" + ', '.join(dpad_positions))
 
+def get_platform (mappingstring):
+    mappings = mappingstring.split (',')
+    for mapping in mappings:
+        if not mapping:
+            continue
+        key = mapping.split(':')[0]
+        value = mapping.split(':')[1]
+        if key == "platform":
+            return value
+    error ("No platform specified " + mapping)
+
 for line in fileinput.input():
     if line.startswith('#') or line == '\n':
         continue
@@ -76,6 +87,8 @@ for line in fileinput.input():
         error ("Either GUID/Name/Mappingstring is missing or empty")
     check_guid(splitted[0])
     check_mapping(splitted[2])
+
+    get_platform(splitted[2])
 
 if not success:
     sys.exit(1)
