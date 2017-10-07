@@ -3,6 +3,8 @@
 import fileinput
 import string
 import sys
+from collections import defaultdict
+import collections
 
 success = True
 
@@ -78,6 +80,21 @@ def get_platform (mappingstring):
             return value
     error ("No platform specified " + mapping)
 
+def has_duplicate(guids):
+    seen = set()
+    seen_add = seen.add
+    seen_twice = set( x for x in guids if x in seen or seen_add(x) )
+    return len(seen_twice) != 0
+
+dupe_dict = defaultdict(list)
+def check_duplicates(guid, platform):
+    guids = list(dupe_dict[platform])
+    guids.append(guid)
+    if has_duplicate(guids):
+        error("Duplicate entry : ")
+    else:
+        dupe_dict[platform].append(guid)
+
 for line in fileinput.input():
     if line.startswith('#') or line == '\n':
         continue
@@ -87,8 +104,7 @@ for line in fileinput.input():
         error ("Either GUID/Name/Mappingstring is missing or empty")
     check_guid(splitted[0])
     check_mapping(splitted[2])
-
-    get_platform(splitted[2])
+    check_duplicates(splitted[0], get_platform(splitted[2]))
 
 if not success:
     sys.exit(1)
