@@ -96,6 +96,7 @@ d8140862000000000000504944564944,HitBox Edition Cthulhu+,a:b1,b:b2,x:b0,y:b3,bac
 bd1215d0000000000000504944564944,Nintendo Retrolink USB Super SNES Classic Controller,y:b0,b:b1,a:b2,x:b3,leftshoulder:b4,rightshoulder:b5,start:b9,back:b8,leftx:a0,lefty:a1,platform:Windows,
 5e048e02000000000000504944564944,Controller (XBOX 360 For Windows),platform:Windows,x:b2,a:b0,b:b1,y:b3,back:b6,start:b7,dpleft:h0.8,dpdown:h0.4,dpright:h0.2,dpup:h0.1,leftshoulder:b4,rightshoulder:b5,righttrigger:a2,leftstick:b8,rightstick:b9,leftx:a0,lefty:a1,rightx:a3,righty:a4,
 300f1201000000000000504944564944,Saitek Dual Analog Pad,a:b2,b:b3,x:b0,y:b1,back:b8,start:b9,leftstick:b10,rightstick:b11,leftshoulder:b4,rightshoulder:b6,dpup:h0.1,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,leftx:a0,lefty:a1,rightx:a3,righty:a2,lefttrigger:b5,righttrigger:b7,platform:Windows,
+45130010000000000000504944564944,Generic USB Joystick,a:b0,b:b1,x:b2,y:b3,back:b8,start:b9,leftstick:b10,rightstick:b11,leftshoulder:b4,rightshoulder:b5,dpup:h0.1,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,leftx:a0,lefty:a1,rightx:a2,righty:a3,lefttrigger:b6,righttrigger:b7,platform:Windows,
 
 # OS X
 0500000047532047616d657061640000,GameStop Gamepad,a:b0,b:b1,back:b8,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,guide:,leftshoulder:b4,leftstick:b10,lefttrigger:b6,leftx:a0,lefty:a1,rightshoulder:b5,rightstick:b11,righttrigger:b7,rightx:a2,righty:a3,start:b9,x:b2,y:b3,platform:Mac OS X,
