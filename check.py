@@ -110,6 +110,6 @@ for line in fileinput.input():
     check_duplicates(splitted[0], get_platform(splitted[2]), line)
 
 if success:
-    print("No mapping errors found!")
+    print("No mapping errors found.")
 else:
     sys.exit(1)
