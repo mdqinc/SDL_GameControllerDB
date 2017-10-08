@@ -1,24 +1,29 @@
 #!/usr/bin/env python3
 
-import fileinput
+#import fileinput
 import string
 import sys
 from collections import defaultdict
 import collections
 import shutil
+import argparse
 
 success = True
 current_line = ""
+current_lineno = 0
 entry_dict = defaultdict(tuple)
 dupe_dict = defaultdict(list)
 
 def get_current_line():
     return current_line
 
+def get_current_lineno():
+    return current_lineno
+
 def error (message):
     global success
     success = False
-    print("Error at line #" + str(fileinput.lineno()), ":", message)
+    print("Error at line #" + str(get_current_lineno()), ":", message)
     print(get_current_line())
 
 def check_guid (guid):
@@ -102,12 +107,15 @@ def check_duplicates(guid, platform):
                 ":\n" + entry_dict[guid][1])
     else:
         dupe_dict[platform].append(guid)
-        entry_dict[guid] = (str(fileinput.lineno()), get_current_line())
+        entry_dict[guid] = (str(get_current_lineno()), get_current_line())
 
-def do_tests():
+def do_tests(filename):
     global current_line
-    for line in fileinput.input():
+    global current_lineno
+    input_file = open(filename, 'r')
+    for lineno, line in enumerate(input_file):
         current_line = line
+        current_lineno = lineno + 1
         if line.startswith('#') or line == '\n':
             continue
         splitted = line[:-1].split(',', 2)
@@ -117,12 +125,14 @@ def do_tests():
         check_guid(splitted[0])
         check_mapping(splitted[2])
         check_duplicates(splitted[0], get_platform(splitted[2]))
+    input_file.close()
 
-def sort_by_name():
+def sort_by_name(filename):
+    input_file = open(filename, 'r')
     sorted_dict = dict({"Windows": list(tuple()), "Mac OS X": list(tuple()), \
         "Linux": list(tuple())})
 
-    for line in fileinput.input():
+    for line in input_file:
         if line.startswith('#') or line == '\n':
             continue
         splitted = line[:-1].split(',', 2)
@@ -140,14 +150,24 @@ def sort_by_name():
         for tuples in sorted(name_tuples, key=lambda tup: tup[0].lower()):
             out_file.write(tuples[1])
     out_file.close()
-    shutil.copyfile(fileinput.filename(), ".bak." + fileinput.filename())
+    input_file.close()
+    shutil.copyfile(input_file.name, ".bak." + input_file.name)
     shutil.move("gamecontrollerdb_sorted.txt", "gamecontrollerdb.txt")
 
 def main():
-    do_tests()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("input_file", help="database file to check \
+        (gamecontrollerdb.txt)")
+    parser.add_argument("--no_sort", help="don't sort the database on success",
+        action="store_true")
+    args = parser.parse_args()
+
+    do_tests(args.input_file)
     if success:
-        print("No mapping errors found. Sorting by human readable name.")
-        sort_by_name()
+        print("No mapping errors found.")
+        if not args.no_sort:
+            print("Sorting by human readable name.")
+            sort_by_name(args.input_file)
     else:
         sys.exit(1)
 
