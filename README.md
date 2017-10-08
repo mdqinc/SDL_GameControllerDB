@@ -14,10 +14,9 @@ SDL_GameControllerAddMappingsFromFile("gamecontrollerdb.txt");
 
 #### Creating new mappings:
 
-To create new mappings, you can use the controllermap utility provided with
-SDL2, or using Steam's Big Picture mode, configure your joystick and then 
-look in config/config.vdf in your Steam installation directory for the 
-SDL_GamepadBind entry.
+To create new mappings, you can use the controllermap utility provided with SDL2.
+
+You can also use Steam's Big Picture mode. Configure your joystick and then look in config/config.vdf in your Steam installation directory for the SDL_GamepadBind entry.
 
 #### Checking your mappings:
 You need to have python3 installed. Run
@@ -25,6 +24,8 @@ You need to have python3 installed. Run
 ```
 python3 check.py gamecontrollerdb.txt
 ```
+
+If no errors were generated, the database file will be sorted. You can now send a Pull Request.
 
 #### References:
 
