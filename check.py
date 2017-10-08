@@ -5,6 +5,7 @@ import string
 import sys
 from collections import defaultdict
 import collections
+import shutil
 
 success = True
 current_line = ""
@@ -117,10 +118,36 @@ def do_tests():
         check_mapping(splitted[2])
         check_duplicates(splitted[0], get_platform(splitted[2]))
 
+def sort_by_name():
+    sorted_dict = dict({"Windows": list(tuple()), "Mac OS X": list(tuple()), \
+        "Linux": list(tuple())})
+
+    for line in fileinput.input():
+        if line.startswith('#') or line == '\n':
+            continue
+        splitted = line[:-1].split(',', 2)
+        if len(splitted) < 3 or not splitted[0] or not splitted[1] \
+            or not splitted[2]:
+            continue
+        platform = get_platform(splitted[2])
+        sorted_dict[platform].append((splitted[1], line))
+
+    out_file = open("gamecontrollerdb_sorted.txt", 'w')
+    for platform, name_tuples in sorted_dict.items():
+        if platform != "Windows":
+            out_file.write("\n")
+        out_file.write("# " + platform + "\n")
+        for tuples in sorted(name_tuples, key=lambda tup: tup[0].lower()):
+            out_file.write(tuples[1])
+    out_file.close()
+    shutil.copyfile(fileinput.filename(), ".bak." + fileinput.filename())
+    shutil.move("gamecontrollerdb_sorted.txt", "gamecontrollerdb.txt")
+
 def main():
     do_tests()
     if success:
-        print("No mapping errors found.")
+        print("No mapping errors found. Sorting by human readable name.")
+        sort_by_name()
     else:
         sys.exit(1)
 
