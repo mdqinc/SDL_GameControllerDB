@@ -124,7 +124,7 @@ def do_tests(filename):
             error ("Either GUID/Name/Mappingstring is missing or empty")
         check_guid(splitted[0])
         check_mapping(splitted[2])
-        check_duplicates(splitted[0], get_platform(splitted[2]))
+        check_duplicates(splitted[0].lower(), get_platform(splitted[2]))
     input_file.close()
 
 def sort_by_name(filename):
@@ -154,12 +154,49 @@ def sort_by_name(filename):
     shutil.copyfile(input_file.name, ".bak." + input_file.name)
     shutil.move("gamecontrollerdb_sorted.txt", "gamecontrollerdb.txt")
 
+# https://hg.libsdl.org/SDL/rev/20855a38e048
+def convert_guids(filename):
+    input_file = open(filename, 'r')
+    out_file = open("gamecontrollerdb_converted.txt", 'w')
+    for lineno, line in enumerate(input_file):
+        if line.startswith('#') or line == '\n':
+            out_file.write(line)
+            continue
+        splitted = line[:-1].split(',', 2)
+        guid = splitted[0]
+        if get_platform(splitted[2]) == "Windows":
+            if guid[20:32] != "504944564944":
+                out_file.write(line)
+                continue
+            guid = guid[:20] + "000000000000"
+            guid = guid[:16] + guid[4:8] + guid[20:]
+            guid = guid[:8] + guid[:4] + guid[12:]
+            guid = "03000000" + guid[8:]
+            guid = guid.lower()
+        elif get_platform(splitted[2]) == "Mac OS X":
+            if guid[4:16] != "000000000000" or guid[20:32] != "000000000000":
+                out_file.write(line)
+                continue
+            guid = guid[:20] + "000000000000"
+            guid = guid[:8] + guid[:4] + guid[12:]
+            guid = "03000000" + guid[8:]
+            guid = guid.lower()
+
+        out = line.replace(splitted[0], guid)
+        out_file.write(out)
+    out_file.close()
+    input_file.close()
+    shutil.copyfile(input_file.name, ".bak." + input_file.name)
+    shutil.move("gamecontrollerdb_converted.txt", "gamecontrollerdb.txt")
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("input_file", help="database file to check \
         (gamecontrollerdb.txt)")
     parser.add_argument("--no_sort", help="don't sort the database on success",
         action="store_true")
+    parser.add_argument("--guid_convert", help="convert Windows and macOS \
+            GUIDs to the newer SDL 2.0.5 format", action="store_true")
     args = parser.parse_args()
 
     do_tests(args.input_file)
@@ -168,6 +205,9 @@ def main():
         if not args.no_sort:
             print("Sorting by human readable name.")
             sort_by_name(args.input_file)
+        if args.guid_convert:
+            print("Converting GUIDs to SDL 2.0.5 format.")
+            convert_guids(args.input_file)
     else:
         sys.exit(1)
 
