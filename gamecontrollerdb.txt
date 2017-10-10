@@ -250,6 +250,7 @@ d814000000000000cecf000000000000,MC Cthulhu,platform:Mac OS X,leftx:,lefty:,righ
 030000000d0f00001100000011010000,HORI CO.,LTD. REAL ARCADE PRO.3,a:b0,b:b1,x:b3,y:b2,back:b8,guide:b12,start:b9,leftstick:b10,rightstick:b11,leftshoulder:b4,rightshoulder:b5,dpup:h0.1,dpdown:h0.0,dpleft:h0.8,dpright:h0.2,leftx:a0,lefty:a1,rightx:a2,righty:a3,lefttrigger:b6,righttrigger:b,platform:Linux,
 030000008916000001fd000024010000,Razer Onza Classic Edition,platform:Linux,x:b2,a:b0,b:b1,y:b3,back:b6,guide:b8tart:b7,dpleft:b11,dpdown:b14,dpright:b12,dpup:b13,leftshoulder:b4,lefttrigger:a2,rightshoulder:b5,righttrigger:a5,leftstick:b9,rightstick:b10,leftx:a0,lefty:a1,rightx:a3,righty:a4,
 030000005e0400008e02000004010000,Microsoft X-Box 360 pad,platform:Linux,a:b0,b:b1,x:b2,y:b3,back:b6,start:b7,guide:b8,leftshoulder:b4,rightshoulder:b5,leftstick:b9,rightstick:b10,leftx:a0,lefty:a1,rightx:a3,righty:a4,lefttrigger:a2,righttrigger:a5,dpup:h0.1,dpleft:h0.8,dpdown:h0.4,dpright:h0.2,
+03000000550900001472000011010000,NVIDIA Corporation NVIDIA Controller,a:b0,b:b1,x:b2,y:b3,back:b6,leftstick:b7,rightstick:b8,leftshoulder:b4,rightshoulder:b5,dpup:h0.1,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,leftx:a0,lefty:a1,rightx:a2,righty:a3,lefttrigger:a5,righttrigger:a4,platform:Linux,
 
 # Android
 5477696e20555342204a6f7973746963,Twin USB Joystick,platform:Android,x:b23,a:b22,b:b21,y:b20,back:b28,start:b29,dpleft:h0.8,dpdown:h0.4,dpright:h0.2,dpup:h0.1,leftshoulder:b26,lefttrigger:b24,rightshoulder:b27,righttrigger:b25,leftstick:b30,rightstick:b31,leftx:a0,lefty:a1,rightx:a3,righty:a2,
