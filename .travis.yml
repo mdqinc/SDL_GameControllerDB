@@ -1,7 +1,0 @@
-language: python
-python: 3.5
-script: ./check.py gamecontrollerdb.txt
-notifications:
-  email:
-    on_success: never
-    on_failure: always
