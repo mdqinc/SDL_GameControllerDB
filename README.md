@@ -14,7 +14,12 @@ SDL_GameControllerAddMappingsFromFile("gamecontrollerdb.txt");
 
 ####Creating new mappings:
 
-To create new mappings, you can use the controllermap utility provided with
+1) Simple GUI tool to create/modify gamepad mappings: (Windows/MACOS/LINUX) 
+http://www.generalarcade.com/gamepadtool/
+
+OR
+
+2) To create new mappings, you can use the controllermap utility provided with
 SDL2, or using Steam's Big Picture mode, configure your joystick and then 
 look in config/config.vdf in your Steam installation directory for the 
 SDL_GamepadBind entry.
