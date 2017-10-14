@@ -94,6 +94,8 @@ def get_platform (mappingstring):
     for mapping in mappings:
         if not mapping:
             continue
+        if len (mapping.split(':')) != 2:
+            continue
         key = mapping.split(':')[0]
         value = mapping.split(':')[1]
         if key == "platform":
@@ -117,6 +119,15 @@ def check_duplicates(guid, platform):
         dupe_dict[platform].append(guid)
         entry_dict[guid] = (str(get_current_lineno()), get_current_line())
 
+def is_duplicate(guid, platform):
+    guids = list(dupe_dict[platform])
+    guids.append(guid)
+    if has_duplicate(guids):
+        return True
+    else:
+        dupe_dict[platform].append(guid)
+        return False
+
 def do_tests(filename):
     global current_line
     global current_lineno
@@ -136,11 +147,15 @@ def do_tests(filename):
     input_file.close()
 
 def sort_by_name(filename):
+    global current_line
+    global current_lineno
     input_file = open(filename, 'r')
     sorted_dict = dict({"Windows": list(tuple()), "Mac OS X": list(tuple()), \
-        "Linux": list(tuple())})
+            "Linux": list(tuple())})
 
-    for line in input_file:
+    for lineno, line in enumerate(input_file):
+        current_line = line
+        current_lineno = lineno + 1
         if line.startswith('#') or line == '\n':
             continue
         splitted = line[:-1].split(',', 2)
@@ -164,9 +179,13 @@ def sort_by_name(filename):
 
 # https://hg.libsdl.org/SDL/rev/20855a38e048
 def convert_guids(filename):
+    global current_line
+    global current_lineno
     input_file = open(filename, 'r')
     out_file = open("gamecontrollerdb_converted.txt", 'w')
     for lineno, line in enumerate(input_file):
+        current_line = line
+        current_lineno = lineno + 1
         if line.startswith('#') or line == '\n':
             out_file.write(line)
             continue
@@ -197,25 +216,103 @@ def convert_guids(filename):
     shutil.copyfile(input_file.name, ".bak." + input_file.name)
     shutil.move("gamecontrollerdb_converted.txt", "gamecontrollerdb.txt")
 
+def remove_dupes(filename):
+    global current_line
+    global current_lineno
+    global dupe_dict
+    dupe_dict = defaultdict(list)
+    input_file = open(filename, 'r')
+    out_file = open("gamecontrollerdb_dupes_removed.txt", 'w')
+    for lineno, line in enumerate(input_file):
+        current_line = line
+        current_lineno = lineno + 1
+        if line.startswith('#') or line == '\n':
+            out_file.write(line)
+            continue
+        splitted = line[:-1].split(',', 2)
+        guid = splitted[0].lower()
+        if is_duplicate(guid, get_platform(splitted[2])):
+            print("Duplicate detected, removing :\n" + line)
+            continue
+        out_file.write(line)
+    out_file.close()
+    input_file.close()
+    shutil.copyfile(input_file.name, ".bak." + input_file.name)
+    shutil.move("gamecontrollerdb_dupes_removed.txt", "gamecontrollerdb.txt")
+
+def add_missing_platforms(filename):
+    global current_line
+    global current_lineno
+    input_file = open(filename, 'r')
+    out_file = open("gamecontrollerdb_platforms.txt", 'w')
+    for lineno, line in enumerate(input_file):
+        current_line = line
+        current_lineno = lineno + 1
+        if line.startswith('#') or line == '\n':
+            out_file.write(line)
+            continue
+        splitted = line[:-1].split(',', 2)
+        guid = splitted[0]
+        platform = get_platform(splitted[2])
+        if platform:
+                out_file.write(line)
+                continue
+
+        out = line[0:-1]
+        if guid[20:32] == "504944564944":
+            print("Adding Windows platform to #" + str(lineno) + " :\n" + line)
+            out += "platform:Windows,"
+        elif guid[4:16] == "000000000000" and guid[20:32] == "000000000000":
+            print("Adding Mac OS X platform to #" + str(lineno) + " :\n" + line)
+            out += "platform:Mac OS X,"
+        else:
+            print("Adding Linux platform to #" + str(lineno) + " :\n" + line)
+            out += "platform:Linux,"
+        out += "\n"
+        out_file.write(out)
+    out_file.close()
+    input_file.close()
+    shutil.copyfile(input_file.name, ".bak." + input_file.name)
+    shutil.move("gamecontrollerdb_platforms.txt", "gamecontrollerdb.txt")
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("input_file", help="database file to check \
         (gamecontrollerdb.txt)")
-    parser.add_argument("--no_sort", help="don't sort the database on success",
+    parser.add_argument("--sort", help="sort the database on success",
         action="store_true")
     parser.add_argument("--guid_convert", help="convert Windows and macOS \
             GUIDs to the newer SDL 2.0.5 format", action="store_true")
+    parser.add_argument("--remove_dupes", help="automatically remove \
+            duplicates", action="store_true")
+    parser.add_argument("--add_missing_platform", help="adds a platform \
+            field if it is missing (on older pre 2.0.5 entries). Skips checks!",
+            action="store_true")
     args = parser.parse_args()
 
+    if args.add_missing_platform:
+        print("Adding missing platforms.")
+        add_missing_platforms(args.input_file)
+        return
+
+    print("Applying checks.")
     do_tests(args.input_file)
+
+    if args.remove_dupes:
+        print("Removing duplicates.")
+        remove_dupes(args.input_file)
+
     if success:
         print("No mapping errors found.")
-        if not args.no_sort:
+        if args.sort:
             print("Sorting by human readable name.")
             sort_by_name(args.input_file)
         if args.guid_convert:
             print("Converting GUIDs to SDL 2.0.5 format.")
             convert_guids(args.input_file)
+            if args.remove_dupes:
+                print("Removing duplicates again.")
+                remove_dupes(args.input_file)
     else:
         sys.exit(1)
 
