@@ -7,7 +7,7 @@ A community source database of game controller mappings to be used with SDL2 Gam
 ## Releases
 
 ### [2.0.4](https://github.com/p-groarke/SDL_GameControllerDB/releases/tag/2.0.4)
-For engines or games using the pre 2.0.5 SDL GUID format. It contains 237 total controller entries total, with duplicates removed.
+For engines or games using the pre 2.0.5 SDL GUID format. It contains 237 controller entries, with duplicates removed.
 
 ## Creating new mappings
 ### [SDL2 Gamepad Tool](http://www.generalarcade.com/gamepadtool/)
