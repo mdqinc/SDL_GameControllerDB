@@ -60,7 +60,15 @@ def check_mapping (mappingstring):
         else:
             if not value:
                 continue
-            if not value[0] in ['a', 'h', 'b']:
+            if value[0] in ['-', '+', '~']:
+                if not value[1] == 'a':
+                    error ("Invalid value \"" + value + "\" for key \"" + key +
+                           "\". Inversion and range modifiers only valid for " +
+                                   "axis (a).")
+                if not value[2:].isnumeric():
+                    error ("Invalid value \"" + value + "\" for key \"" + key +
+                           "\". Should be followed by a number after 'a'")
+            elif not value[0] in ['a', 'h', 'b']:
                 error ("Invalid value \"" + value + "\" for key \"" + key +
                        "\". Should start with a, b, or h")
             elif value[0] in ['a', 'b']:
