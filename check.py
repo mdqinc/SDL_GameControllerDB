@@ -284,7 +284,7 @@ def main():
         (gamecontrollerdb.txt)")
     parser.add_argument("--sort", help="sort the database on success",
         action="store_true")
-    parser.add_argument("--guid_convert", help="convert Windows and macOS \
+    parser.add_argument("--convert_guids", help="convert Windows and macOS \
             GUIDs to the newer SDL 2.0.5 format", action="store_true")
     parser.add_argument("--remove_dupes", help="automatically remove \
             duplicates", action="store_true")
@@ -310,7 +310,7 @@ def main():
         if args.sort:
             print("Sorting by human readable name.")
             sort_by_name(args.input_file)
-        if args.guid_convert:
+        if args.convert_guids:
             print("Converting GUIDs to SDL 2.0.5 format.")
             convert_guids(args.input_file)
             if args.remove_dupes:
