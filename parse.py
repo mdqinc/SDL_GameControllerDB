@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Parse gamecontrollerdb format into Python datastructures
 
 import argparse
@@ -50,19 +50,20 @@ def parse_token(entry, token):
         entry[key] = val
 
 def parse_line(i, entries, line):
+    errors = 0
     clean_line = line.strip()
     if not clean_line:
-        return
+        return errors
 
     if clean_line[0] == comment:
         m = re.match('%s\s+DUPE_OK\s+([0-9A-Fa-f]+)' % comment, clean_line)
         if m:
             entries['dupe_oks'][m.group(1)] = True
-        return
+        return errors
 
     tokens = clean_line.split(',')
     if len(tokens) < 2:
-        return
+        return errors
 
     meta  = {}
     entry = {}
@@ -71,6 +72,10 @@ def parse_line(i, entries, line):
     meta['line']  = i
     entry['name'] = tokens[1].strip()
 
+    if re.match('.*\s\s+.*', entry['name']):
+        print('%4d: Name contains subsequent space characters. GUID: %s, name: %s' % (i, guid, entry['name']))
+        errors += 1
+
     rest = tokens[2:]
     for token in rest:
         parse_token(entry, token)
@@ -78,18 +83,19 @@ def parse_line(i, entries, line):
     if guid in entries['guids']:
         existing = entries['guids'][guid]['data']
         if existing == entry:
-            return
+            return errors
 
         if guid not in entries['dupe_oks']:
             existing_meta = entries['guids'][guid]['meta']
-            print('Duplicate entry found for guid %s' % guid)
+            print('Duplicate entry found for GUID %s' % guid)
             print('%4d: %s' % (existing_meta['line'], existing_meta['raw']))
             print('%4d: %s' % (meta['line'], meta['raw']))
             print('Differences:')
             differences = set(existing.items()) ^ set(entry.items())
             pprint(differences)
             print('')
-            return
+            errors += 1
+            return errors
 
         guid = '%s.%d' % (guid, meta['line'])
 
@@ -97,13 +103,15 @@ def parse_line(i, entries, line):
 
     platform = entry['platform'] if 'platform' in entry else 'Generic'
     entries['platforms'][platform].append(guid)
+    return errors
 
 def parse_db(db):
     entries = {'guids': {}, 'platforms': defaultdict(list), 'dupe_oks': {}}
+    errors = 0
     with open(db, 'r') as f:
         for i, l in enumerate(f.readlines()):
-            parse_line(i + 1, entries, l)
-    return entries
+            errors += parse_line(i + 1, entries, l)
+    return (entries, errors)
 
 def comment_box(out, lines, width=78):
     inner_width = width - 4
@@ -118,7 +126,7 @@ def format_value(value):
     if len(value) > 2:
         out += '.%s' % value[2]
     return out
-        
+
 def format_entries(entries):
     out = []
 
@@ -133,14 +141,21 @@ def format_entries(entries):
     for dupe_ok in entries['dupe_oks']:
         out.append('%s DUPE_OK %s' % (comment, dupe_ok))
 
-    for platform, guids in sorted(entries['platforms'].iteritems()):
+    for platform, guids in sorted(entries['platforms'].items()):
         out.append('')
         out.append('%s %s' % (comment, platform))
         for guid in sorted(guids, key=lambda a: int(a.split('.')[0], 16)):
             fixed_guid = guid.split('.')[0]
             entry = entries['guids'][guid]['data']
+
+            newname = re.sub('\s\s+', ' ', entry['name'])
+
+            if newname != entry['name']:
+                print('Fixed name for GUID %s:\n\tOld: %s\n\tNew: %s' % (guid, entry['name'], newname))
+                entry['name'] = newname
+
             build = '%s,%s,' % (fixed_guid, entry['name'])
-            for key, val in sorted(entry.iteritems()):
+            for key, val in sorted(entry.items()):
                 if key == 'name':
                     continue
                 val_str = val if key == 'platform' else format_value(val)
@@ -161,11 +176,14 @@ def main():
     parser.add_argument('-o', '--output_file', help='generated database file')
     args = parser.parse_args()
 
-    entries = parse_db(args.input_file)
+    entries, errors = parse_db(args.input_file)
 
     output_file = args.output_file
     if output_file:
         write_output(entries, output_file)
+    elif errors:
+        print('%i errors detected' % errors)
+        exit(1)
 
 if __name__ == "__main__":
     main()
