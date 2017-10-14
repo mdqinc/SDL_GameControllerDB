@@ -171,7 +171,10 @@ def sort_by_name(filename):
             out_file.write("\n")
         out_file.write("# " + platform + "\n")
         for tuples in sorted(name_tuples, key=lambda tup: tup[0].lower()):
-            out_file.write(tuples[1])
+            out = tuples[1]
+            if out[-1] != '\n':
+                out += '\n'
+            out_file.write(out)
     out_file.close()
     input_file.close()
     shutil.copyfile(input_file.name, ".bak." + input_file.name)
