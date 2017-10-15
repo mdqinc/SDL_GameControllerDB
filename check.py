@@ -72,7 +72,12 @@ def check_mapping (mappingstring):
                 error ("Invalid value \"" + value + "\" for key \"" + key +
                        "\". Should start with a, b, or h")
             elif value[0] in ['a', 'b']:
-                if not value[1:].isnumeric():
+                if value[0] == 'a' and value[-1] in ['-', '+', '~']:
+                    if not value[1:-1].isnumeric():
+                        error ("Invalid value \"" + value + "\" for key \""
+                                + key + "\". Should be followed by a number " +
+                                "after 'a'")
+                elif not value[1:].isnumeric():
                     error ("Invalid value \"" + value + "\" for key \"" + key +
                            "\". Should be followed by a number after 'a' or " +
                            "'b'")
