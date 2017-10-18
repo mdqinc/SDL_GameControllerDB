@@ -216,9 +216,13 @@ def convert_guids(filename):
             guid = guid[:8] + guid[:4] + guid[12:]
             guid = "03000000" + guid[8:]
             guid = guid.lower()
+        else:
+            out_file.write(line)
+            continue
 
         out = line.replace(splitted[0], guid)
         out_file.write(out)
+        print("\nConverted :\t" + splitted[0] + "\nTo :\t\t" + guid)
     out_file.close()
     input_file.close()
     shutil.copyfile(input_file.name, ".bak." + input_file.name)
