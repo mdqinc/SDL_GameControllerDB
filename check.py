@@ -39,7 +39,8 @@ def check_mapping (mappingstring):
             "back", "dpdown", \
             "dpleft", "dpright", "dpup", "guide", "leftshoulder", "leftstick", \
             "lefttrigger", "rightshoulder", "rightstick", "righttrigger", \
-            "start", "x", "y"]
+            "start", "x", "y", "-leftx", "-lefty", "-rightx", "-righty", \
+            "+leftx", "+lefty", "+rightx", "+righty"]
     platforms = ["Linux", "Mac OS X", "Windows"]
     mappings = mappingstring.split (',')
     for mapping in mappings:
@@ -60,7 +61,7 @@ def check_mapping (mappingstring):
         else:
             if not value:
                 continue
-            if value[0] in ['-', '+', '~']:
+            if value[0] in ['-', '+']:
                 if not value[1] == 'a':
                     error ("Invalid value \"" + value + "\" for key \"" + key +
                            "\". Inversion and range modifiers only valid for " +
@@ -72,7 +73,7 @@ def check_mapping (mappingstring):
                 error ("Invalid value \"" + value + "\" for key \"" + key +
                        "\". Should start with a, b, or h")
             elif value[0] in ['a', 'b']:
-                if value[0] == 'a' and value[-1] in ['-', '+', '~']:
+                if value[0] == 'a' and value[-1] in ['~']:
                     if not value[1:-1].isnumeric():
                         error ("Invalid value \"" + value + "\" for key \""
                                 + key + "\". Should be followed by a number " +
