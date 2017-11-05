@@ -10,7 +10,7 @@ A community source database of game controller mappings to be used with SDL2 Gam
 For games or engines using the SDL 2.0.5 format. There are no range or inversion modifiers (+,-,~). It contains 282 controller entries, with duplicates removed.
 
 ### [2.0.4](https://github.com/p-groarke/SDL_GameControllerDB/releases/tag/2.0.4)
-For engines or games using the SDL 2.0.4 format. GUIDs are different depending on the platform. It contains 237 controller entries, with duplicates removed.
+For games or engines using the SDL 2.0.4 format. GUIDs are different depending on the platform. It contains 237 controller entries, with duplicates removed.
 
 ## Creating new mappings
 ### [SDL2 Gamepad Tool](http://www.generalarcade.com/gamepadtool/)
