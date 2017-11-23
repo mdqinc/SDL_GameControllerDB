@@ -1,6 +1,6 @@
 language: python
-python: 3.5
-script: ./check.py gamecontrollerdb.txt
+python: 2.7
+script: ./check.py gamecontrollerdb_204.txt && ./check.py gamecontrollerdb_205.txt
 notifications:
   email:
     on_success: never
