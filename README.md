@@ -5,10 +5,10 @@
 A community source database of game controller mappings to be used with SDL2 Game Controller functionality.
 
 ## SDL Variants
-gamecontrollerdb_205.txt: For games or engines using the SDL 2.0.5 format. There are no range or inversion modifiers (+,-,~). It contains 282 controller entries, with duplicates removed.
+gamecontrollerdb_205.txt: For games or engines using the SDL >= 2.0.5 format. There are no range or inversion modifiers (+,-,~).
 
 gamecontrollerdb_204.txt
-For games or engines using the SDL 2.0.4 format. GUIDs are different depending on the platform. It contains 237 controller entries, with duplicates removed.
+For games or engines using the SDL 2.0.4 format. GUIDs are different depending on the platform. Note that SDL > 2.0.4 can still read this format.
 
 ## Create New Mappings
 A mapping looks like this :
@@ -17,14 +17,10 @@ A mapping looks like this :
 ```
 It is comprised of a controller GUID (`030000004c050000c405000000010000`), a name (`PS4 Controller`), button / axis mappings (`leftshoulder:b4`) and a platform (`platform:Mac OS X`).
 
-There are a few different ways to create mappings. Here are some options. If you know of other tools, I would be happy to add them to the list.
+There are a few different tools that let you create mappings.
 
-### [SDL2 Gamepad Tool](http://www.generalarcade.com/gamepadtool/)
-This seems to be the easiest and most reliable way to configure your gamepad. It is cross-platform (Windows, macOS and Linux).
-
-<img src="http://www.generalarcade.com/gamepadtool/gamepadtool.png" height="auto" width="360">
-
-Setup your controller and copy the ouput entry. The tool currently doesn't output SDL 2.0.5 GUIDs, but that is fine as SDL still supports these GUIDs. I will convert older GUIDs in pull requests as well.
+### [SDL2 ControllerMap](https://www.libsdl.org/download-2.0.php)
+The controllermap utility provided with SDL2 is the official tool to create these mappings, it runs on all the platforms SDL runs (Windows, Mac, Linux, iOS, Android, etc).
 
 ### [Steam](http://store.steampowered.com)
 In Steam's Big Picture mode, configure your joystick. Then look in `[steam_installation_directory]/config/config.vdf` in your Steam installation directory for the `SDL_GamepadBind` entry. It is one of the last entries, it will look something like this.
@@ -35,22 +31,26 @@ In Steam's Big Picture mode, configure your joystick. Then look in `[steam_insta
 
 Unfortunately, **Steam does not ouput the platform field**, so you will need to add it manually. At the end of the generated entry, add `platform:Windows,` or `platform:Mac OS X,` or `platform:Linux,`.
 
-### [SDL2 ControllerMap](https://www.libsdl.org/download-2.0.php)
-You can also use the controllermap utility provided with SDL2.
+
+### [SDL2 Gamepad Tool](http://www.generalarcade.com/gamepadtool/)
+Third party cross-platform tool (Windows, macOS and Linux).
+
+Setup your controller and copy the ouput entry. The tool currently doesn't output SDL 2.0.5 GUIDs, but that is fine as SDL still supports these GUIDs. I will convert older GUIDs in pull requests as well.
 
 ## Usage
 Download gamecontrollerdb.txt, place it in your app's directory and load it.
 
 For example :
 ```
-SDL_GameControllerAddMappingsFromFile("gamecontrollerdb.txt");
+SDL_GameControllerAddMappingsFromFile("gamecontrollerdb_205.txt");
 ```
 
 # For Contributors
 ## Check Your Mappings
-Before submitting a new Pull Request, please run the `check.py` tool to make sure everything is in order. It requires python3 installed. Run it with:
+Before submitting a new Pull Request, please run the `check.py` tool to make sure everything is in order. Run it with:
 ```
-python3 check.py gamecontrollerdb.txt
+python check.py gamecontrollerdb_204.txt
+python check.py gamecontrollerdb_205.txt
 ```
 
 If no errors were generated you can (please) send a Pull Request! Tests are automatically run on Pull Requests, so you'll easily see if there is an issue.

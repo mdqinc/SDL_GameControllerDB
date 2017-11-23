@@ -1,4 +1,4 @@
-# Game Controller DB for SDL <= 2.0.4
+# Game Controller DB for SDL in legacy (pre 2.0.5) format
 # Source: https://github.com/gabomdq/SDL_GameControllerDB
 # Windows
 02200090000000000000504944564944,8Bitdo NES30 PRO USB,platform:Windows,a:b0,b:b1,x:b3,y:b4,leftshoulder:b6,rightshoulder:b7,lefttrigger:b8,righttrigger:b9,back:b10,start:b11,leftstick:b13,rightstick:b14,leftx:a0,lefty:a1,rightx:a3,righty:a4,dpup:h0.1,dpright:h0.2,dpdown:h0.4,dpleft:h0.8,
