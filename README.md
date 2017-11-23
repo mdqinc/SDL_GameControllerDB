@@ -1,14 +1,13 @@
 # SDL_GameControllerDB
 
-[![Build Status](https://travis-ci.org/p-groarke/SDL_GameControllerDB.svg?branch=master)](https://travis-ci.org/p-groarke/SDL_GameControllerDB)
+[![Build Status](https://travis-ci.org/gabomdq/SDL_GameControllerDB.svg?branch=master)](https://travis-ci.org/gabomdq/SDL_GameControllerDB)
 
 A community source database of game controller mappings to be used with SDL2 Game Controller functionality.
 
-## Releases
-### [2.0.5](https://github.com/p-groarke/SDL_GameControllerDB/releases/tag/2.0.5)
-For games or engines using the SDL 2.0.5 format. There are no range or inversion modifiers (+,-,~). It contains 282 controller entries, with duplicates removed.
+## SDL Variants
+gamecontrollerdb_205.txt: For games or engines using the SDL 2.0.5 format. There are no range or inversion modifiers (+,-,~). It contains 282 controller entries, with duplicates removed.
 
-### [2.0.4](https://github.com/p-groarke/SDL_GameControllerDB/releases/tag/2.0.4)
+gamecontrollerdb_204.txt
 For games or engines using the SDL 2.0.4 format. GUIDs are different depending on the platform. It contains 237 controller entries, with duplicates removed.
 
 ## Create New Mappings
