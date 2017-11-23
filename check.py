@@ -66,7 +66,7 @@ def check_mapping (mappingstring):
                     error ("Invalid value \"" + value + "\" for key \"" + key +
                            "\". Inversion and range modifiers only valid for " +
                                    "axis (a).")
-                if not value[2:].isnumeric():
+                if not value[2:].isdigit():
                     error ("Invalid value \"" + value + "\" for key \"" + key +
                            "\". Should be followed by a number after 'a'")
             elif not value[0] in ['a', 'h', 'b']:
@@ -74,11 +74,11 @@ def check_mapping (mappingstring):
                        "\". Should start with a, b, or h")
             elif value[0] in ['a', 'b']:
                 if value[0] == 'a' and value[-1] in ['~']:
-                    if not value[1:-1].isnumeric():
+                    if not value[1:-1].isdigit():
                         error ("Invalid value \"" + value + "\" for key \""
                                 + key + "\". Should be followed by a number " +
                                 "after 'a'")
-                elif not value[1:].isnumeric():
+                elif not value[1:].isdigit():
                     error ("Invalid value \"" + value + "\" for key \"" + key +
                            "\". Should be followed by a number after 'a' or " +
                            "'b'")
@@ -86,7 +86,7 @@ def check_mapping (mappingstring):
                 dpad_positions = map(str, [0, 1, 2, 4, 8, 1|2, 2|4, 4|8, 8|1])
                 dpad_index = value[1:].split ('.')[0]
                 dpad_position = value[1:].split ('.')[1]
-                if not dpad_index.isnumeric():
+                if not dpad_index.isdigit():
                     error ("Invalid value \"" + value + "\" for key \"" + key +
                            "\". Dpad index \"" + dpad_index + "\" should be " +
                            "a number")
@@ -150,6 +150,7 @@ def do_tests(filename):
         check_guid(splitted[0])
         check_mapping(splitted[2])
         check_duplicates(splitted[0].lower(), get_platform(splitted[2]))
+
     input_file.close()
 
 def sort_by_name(filename):
