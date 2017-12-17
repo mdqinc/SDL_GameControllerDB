@@ -5,11 +5,13 @@
 A community source database of game controller mappings to be used with SDL2 Game Controller functionality.
 
 ## SDL Variants
-gamecontrollerdb.txt : For games or engines using the SDL >= 2.0.6 format. This is the most recent version.
+### gamecontrollerdb.txt
+For games or engines using the SDL >= 2.0.6 format. This is the most recent version.
 
-gamecontrollerdb_205.txt: For games or engines using the SDL >= 2.0.5 format. There are no range or inversion modifiers (+,-,~).
+### gamecontrollerdb_205.txt
+For games or engines using the SDL >= 2.0.5 format. There are no range or inversion modifiers (+,-,~).
 
-gamecontrollerdb_204.txt
+### gamecontrollerdb_204.txt
 For games or engines using the SDL 2.0.4 format. GUIDs are different depending on the platform. Note that SDL > 2.0.4 can still read this format.
 
 ## Create New Mappings
@@ -35,7 +37,7 @@ Unfortunately, **Steam does not ouput the platform field**, so you will need to 
 
 
 ### [SDL2 Gamepad Tool](http://www.generalarcade.com/gamepadtool/)
-Third party cross-platform tool (Windows, macOS and Linux).
+Third party cross-platform tool with GUI (Windows, macOS and Linux).
 
 Setup your controller and copy the ouput entry. The tool currently doesn't output SDL 2.0.5 GUIDs, but that is fine as SDL still supports these GUIDs. I will convert older GUIDs in pull requests as well.
 
@@ -44,7 +46,7 @@ Download gamecontrollerdb.txt, place it in your app's directory and load it.
 
 For example :
 ```
-SDL_GameControllerAddMappingsFromFile("gamecontrollerdb_205.txt");
+SDL_GameControllerAddMappingsFromFile("gamecontrollerdb.txt");
 ```
 
 # For Contributors
