@@ -160,9 +160,15 @@ def sort_by_name(filename):
     sorted_dict = dict({"Windows": list(tuple()), "Mac OS X": list(tuple()), \
             "Linux": list(tuple())})
 
+    header_message = ""
+
     for lineno, line in enumerate(input_file):
         current_line = line
         current_lineno = lineno + 1
+
+        if current_lineno == 1 or current_lineno == 2:
+            header_message += line
+            continue
         if line.startswith('#') or line == '\n':
             continue
         splitted = line[:-1].split(',', 2)
@@ -173,6 +179,8 @@ def sort_by_name(filename):
         sorted_dict[platform].append((splitted[1], line))
 
     out_file = open("gamecontrollerdb_sorted.txt", 'w')
+    out_file.write(header_message)
+
     for platform, name_tuples in sorted_dict.items():
         if platform != "Windows":
             out_file.write("\n")
