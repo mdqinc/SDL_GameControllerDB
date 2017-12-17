@@ -5,6 +5,8 @@
 A community source database of game controller mappings to be used with SDL2 Game Controller functionality.
 
 ## SDL Variants
+gamecontrollerdb.txt : For games or engines using the SDL >= 2.0.6 format. This is the most recent version.
+
 gamecontrollerdb_205.txt: For games or engines using the SDL >= 2.0.5 format. There are no range or inversion modifiers (+,-,~).
 
 gamecontrollerdb_204.txt
@@ -47,10 +49,10 @@ SDL_GameControllerAddMappingsFromFile("gamecontrollerdb_205.txt");
 
 # For Contributors
 ## Check Your Mappings
+The currently active version is gamecontrollerdb.txt. If your mappings work on older SDL versions, you can add them to the appropriate files.
 Before submitting a new Pull Request, please run the `check.py` tool to make sure everything is in order. Run it with:
 ```
-python check.py gamecontrollerdb_204.txt
-python check.py gamecontrollerdb_205.txt
+python check.py gamecontrollerdb.txt
 ```
 
 If no errors were generated you can (please) send a Pull Request! Tests are automatically run on Pull Requests, so you'll easily see if there is an issue.
