@@ -27,6 +27,8 @@ def error (message):
     print(get_current_line())
 
 def check_guid (guid):
+    if guid == "xinput":
+        return
     if len (guid) != 32:
         error ("The length of the guid string must be equal to 32")
     for c in guid:
