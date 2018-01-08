@@ -52,7 +52,9 @@ SDL_GameControllerAddMappingsFromFile("gamecontrollerdb.txt");
 # For Contributors
 ## Check Your Mappings
 The currently active version is gamecontrollerdb.txt. If your mappings work on older SDL versions, you can add them to the appropriate files.
-Before submitting a new Pull Request, please run the `check.py` tool to make sure everything is in order. Run it with:
+Before submitting a new Pull Request, please run the `check.py` tool to make sure everything is in order.
+
+*The `check.py` script requires python 3.* Run it with:
 ```
 python check.py gamecontrollerdb.txt
 ```
