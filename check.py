@@ -5,8 +5,6 @@ import sys
 #     print("This script requires Python 3.")
 #     exit(1)
 
-from collections import defaultdict
-from collections import namedtuple
 from os import path
 import string
 import collections
@@ -15,7 +13,7 @@ import argparse
 import csv
 import re
 
-FILE_HEADER = "# Game Controller DB for SDL in post 2.0.6 format\n\
+FILE_HEADER = "# Game Controller DB for SDL in 2.0.6 format\n\
 # Source: https://github.com/gabomdq/SDL_GameControllerDB\n"
 
 mappings_dict = {
@@ -80,7 +78,9 @@ class Mapping:
         mapping.pop(0)
         self.set_platform(mapping)
         self.set_keys(mapping)
-        self.remove_empty_mappings()
+
+        # Remove empty mappings.
+        self.__keys = {k:v for (k,v) in self.__keys.items() if v is not ""}
 
 
     def set_guid(self, guid):
@@ -149,9 +149,6 @@ class Mapping:
         if throw:
             raise ValueError("Duplicate keys detected.", error_msg)
 
-    def remove_empty_mappings(self):
-        self.__keys = {k:v for (k,v) in self.__keys.items() if v is not ""}
-
     def __str__(self):
         ret = "Mapping {\n  guid: %s\n  name: %s\n  platform: %s\n" \
             % (self.guid, self.name, self.platform)
@@ -165,7 +162,8 @@ class Mapping:
 
     def serialize(self):
         ret = "%s,%s," % (self.guid, self.name)
-        for key,val in self.__keys.items():
+        sorted_keys = sorted(self.__keys.items())
+        for key,val in sorted_keys:
             ret += "%s:%s," % (key, val)
         ret += "platform:%s," % (self.platform)
         return ret
