@@ -23,6 +23,20 @@ mappings_dict = {
     "Android": {},
 }
 
+parser = argparse.ArgumentParser()
+parser.add_argument("input_file", help="database file to check, " \
+        "ex. gamecontrollerdb.txt")
+parser.add_argument("--format", help="sorts, formats and removes duplicates",
+        action="store_true")
+parser.add_argument("--convert_guids", help="convert Windows and macOS " \
+        "GUIDs to the newer SDL 2.0.5 format",
+        action="store_true")
+parser.add_argument("--add_missing_platform", help="adds a platform "\
+        "field if it is missing on Windows and Mac OS X 2.0.4 entries",
+        action="store_true")
+parser.add_argument("--import_header", metavar="sdl_header",
+        help="imports and overrides mappings using SDL_gamecontrollerdb.h")
+
 class Mapping:
     BUTTON_REGEXES = {
         "+a": re.compile(r"^[0-9]+\~?$"),
@@ -32,11 +46,11 @@ class Mapping:
         "h": re.compile(r"^[0-9]+\.(0|1|2|4|8|3|6|12|9)$"),
     }
 
-    def __init__(self, mappingstring, linenumber, add_missing_platform = False):
+    def __init__(self, mapping_string, line_number, add_missing_platform = False):
         self.guid = ""
         self.name = ""
         self.platform = ""
-        self.linenumber = 0
+        self.line_number = 0
         self.__keys = {
             "+leftx": "",
             "+lefty": "",
@@ -69,8 +83,8 @@ class Mapping:
             "y": "",
         }
 
-        self.linenumber = linenumber
-        reader = csv.reader([mappingstring], skipinitialspace=True)
+        self.line_number = line_number
+        reader = csv.reader([mapping_string], skipinitialspace=True)
         mapping = next(reader)
         mapping = list(filter(None, mapping))
         self.set_guid(mapping[0])
@@ -221,19 +235,73 @@ class Mapping:
             self.guid = guid
 
 
+def import_header(filepath):
+    class Platform:
+        XINPUT = 0
+        WINDOWS = 1
+        OSX = 2
+        LINUX = 3
+        ANDROID = 4
+        NONE = 5
+
+    current_platform = Platform.NONE
+
+    input_file = open(filepath, mode="r")
+    for lineno, line in enumerate(input_file):
+        if "#if SDL_JOYSTICK_XINPUT" in line:
+            current_platform = Platform.XINPUT
+            continue
+        elif "#if SDL_JOYSTICK_DINPUT" in line:
+            current_platform = Platform.WINDOWS
+            continue
+        elif "#if defined(__MACOSX__)" in line:
+            current_platform = Platform.OSX
+            continue
+        elif "#if defined(__LINUX__)" in line:
+            current_platform = Platform.LINUX
+            continue
+        elif "#if defined(__ANDROID__)" in line:
+            current_platform = Platform.ANDROID
+            continue
+        elif "#endif" in line:
+            current_platform = Platform.NONE
+            continue
+
+        if current_platform == Platform.NONE:
+            continue
+
+        mapping_string = line[line.find('"') + 1:]
+        mapping_string = mapping_string[:mapping_string.find('"')]
+
+        if current_platform == Platform.XINPUT:
+            mapping_string += "platform:Windows,"
+        if current_platform == Platform.WINDOWS:
+            mapping_string += "platform:Windows,"
+        if current_platform == Platform.OSX:
+            mapping_string += "platform:Mac OS X,"
+        if current_platform == Platform.LINUX:
+            mapping_string += "platform:Linux,"
+        if current_platform == Platform.ANDROID:
+            mapping_string += "platform:Android,"
+
+        # print(mapping_string)
+
+        try:
+            mapping = Mapping(mapping_string, lineno + 1)
+        except ValueError as e:
+            print("\nError at line #" + str(lineno + 1))
+            print(e.args)
+            print("Ignoring mapping")
+            print(line)
+            continue
+    input_file.close()
+
+
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("input_file", help="database file to check, " \
-        "ex. gamecontrollerdb.txt")
-    parser.add_argument("--format", help="sorts, formats and removes duplicates",
-            action="store_true")
-    parser.add_argument("--convert_guids", help="convert Windows and macOS " \
-        "GUIDs to the newer SDL 2.0.5 format.",
-        action="store_true")
-    parser.add_argument("--add_missing_platform", help="adds a platform "\
-           "field if it is missing on Windows and Mac OS X 2.0.4 entries.",
-           action="store_true")
+    global mappings_dict # { "platform": { "guid": Mapping }}
+    global parser
     args = parser.parse_args()
+    success = True
 
     if args.add_missing_platform:
         print("Will try to add missing platforms. Requires SDL 2.0.4 GUID.")
@@ -241,12 +309,11 @@ def main():
             print("Use --format option to save database. Running in debug "\
                     "output mode...")
 
+
     # Tests.
     print("\nApplying checks.")
-    global mappings_dict # { "platform": { "guid": Mapping }}
-    success = True
-    input_file = open(args.input_file, mode="r")
 
+    input_file = open(args.input_file, mode="r")
     for lineno, line in enumerate(input_file):
         if line.startswith('#') or line == '\n':
             continue
@@ -263,7 +330,7 @@ def main():
         if mapping.guid in mappings_dict[mapping.platform]:
             print("Duplicate detected at line #" + str(lineno + 1))
             prev_mapping = mappings_dict[mapping.platform][mapping.guid]
-            print("Previous mapping at line #" + str(prev_mapping.linenumber))
+            print("Previous mapping at line #" + str(prev_mapping.line_number))
             print("In mapping")
             print(line)
             success = False
@@ -277,16 +344,24 @@ def main():
     else:
         sys.exit(1)
 
+
     # Misc tools.
+
     if args.convert_guids:
         print("Converting GUIDs to SDL 2.0.5+ format.")
         if not args.format:
             print("Use --format option to save database. Running in debug " \
                     "output mode...")
-
         for platform,p_dict in mappings_dict.items():
             for guid,mapping in p_dict.items():
                 mapping.convert_guid()
+
+    if args.import_header is not None:
+        print("Importing mappings from SDL_gamecontrollerdb.h.")
+        if not args.format:
+            print("Use --format option to save database. Running in debug "\
+                    "output mode...")
+        import_header(args.import_header)
 
     if args.format:
         print("\nFormatting db.")
