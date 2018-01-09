@@ -81,14 +81,20 @@ You may now send a Pull Request. Tests are automatically run on Pull Requests, s
 
 ### Options
 ```
-usage: check.py [-h] [--format] input_file
+usage: check.py [-h] [--format] [--convert_guids] [--add_missing_platform]
+                input_file
 
 positional arguments:
-  input_file  database file to check, ex. gamecontrollerdb.txt
+  input_file            database file to check, ex. gamecontrollerdb.txt
 
 optional arguments:
-  -h, --help  show this help message and exit
-  --format    sorts, formats and removes duplicates
+  -h, --help            show this help message and exit
+  --format              sorts, formats and removes duplicates
+  --convert_guids       convert Windows and macOS GUIDs to the newer SDL 2.0.5
+                        format.
+  --add_missing_platform
+                        adds a platform field if it is missing on Windows and
+                        Mac OS X 2.0.4 entries.
 ```
 
 ## References
