@@ -7,6 +7,7 @@ import sys
 
 from collections import defaultdict
 from collections import namedtuple
+from os import path
 import string
 import collections
 import shutil
@@ -249,10 +250,9 @@ def add_missing_platforms(filename):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("input_file", help="Database file to check, \
-        ex. gamecontrollerdb.txt.")
-    parser.add_argument("--format", help="Should be run before a pull \
-            request. Sorts, formats and removes duplicates.",
+    parser.add_argument("input_file", help="database file to check, \
+        ex. gamecontrollerdb.txt")
+    parser.add_argument("--format", help="sorts, formats and removes duplicates",
             action="store_true")
 
 # Disable misc tools until refactor
@@ -314,7 +314,8 @@ def main():
 
     if args.format:
         print("\nFormatting db.")
-        out_file = open("gamecontrollerdb_formatted.txt", 'w')
+        out_filename = path.splitext(input_file.name)[0] + "_format.txt"
+        out_file = open(out_filename, 'w')
         out_file.write(FILE_HEADER)
         for platform,p_dict in mappings_dict.items():
             out_file.write("\n")
@@ -326,8 +327,10 @@ def main():
                 out_file.write(mapping.serialize() + "\n")
 
         out_file.close()
-        shutil.copyfile(input_file.name, ".bak." + input_file.name)
-        shutil.move("gamecontrollerdb_formatted.txt", "gamecontrollerdb.txt")
+        backup_filename = (path.join(path.split(input_file.name)[0],
+                ".bak." + path.split(input_file.name)[1]))
+        shutil.copyfile(input_file.name, backup_filename)
+        shutil.move(out_filename, input_file.name)
 
 
 if __name__ == "__main__":
