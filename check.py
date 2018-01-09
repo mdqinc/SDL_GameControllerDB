@@ -20,6 +20,7 @@ mappings_dict = {
     "Windows": {},
     "Mac OS X": {},
     "Linux": {},
+    "Android": {},
 }
 
 class Mapping:
