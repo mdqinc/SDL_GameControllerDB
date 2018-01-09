@@ -13,8 +13,8 @@ import argparse
 import csv
 import re
 
-FILE_HEADER = "# Game Controller DB for SDL in 2.0.6 format\n\
-# Source: https://github.com/gabomdq/SDL_GameControllerDB\n"
+FILE_HEADER = "# Game Controller DB for SDL in 2.0.6 format\n" \
+        "# Source: https://github.com/gabomdq/SDL_GameControllerDB\n"
 
 mappings_dict = {
     "Windows": {},
@@ -32,7 +32,7 @@ class Mapping:
         "h": re.compile(r"^[0-9]+\.(0|1|2|4|8|3|6|12|9)$"),
     }
 
-    def __init__(self, mappingstring, linenumber):
+    def __init__(self, mappingstring, linenumber, add_missing_platform = False):
         self.guid = ""
         self.name = ""
         self.platform = ""
@@ -77,7 +77,7 @@ class Mapping:
         mapping.pop(0)
         self.set_name(mapping[0])
         mapping.pop(0)
-        self.set_platform(mapping)
+        self.set_platform(mapping, add_missing_platform)
         self.set_keys(mapping)
 
         # Remove empty mappings.
@@ -104,17 +104,36 @@ class Mapping:
         self.name = name
 
 
-    def set_platform(self, mapping):
+    def __get_missing_platform(self):
+        if self.guid[20:32] == "504944564944":
+            print("Adding 'platform:Windows' to %s" % (self.name))
+            return ("platform:Windows")
+        elif self.guid[4:16] == "000000000000" \
+                and self.guid[20:32] == "000000000000":
+            print("Adding 'platform:Mac OS X' to %s" % (self.name))
+            return ("platform:Mac OS X")
+        else:
+            raise ValueError("Add missing platform : Cannot determine platform"\
+                    " confidently.")
+
+
+    def set_platform(self, mapping, add_missing_platform):
+        remove_field_from_mapping = True
         platform_kv = next((x for x in mapping if "platform:" in x), None)
         if platform_kv == None:
-            raise ValueError("Required 'platform' field not found.")
+            if add_missing_platform:
+                platform_kv = self.__get_missing_platform()
+                remove_field_from_mapping = False
+            else:
+                raise ValueError("Required 'platform' field not found.")
 
         platform = platform_kv.split(':')[1]
-
         if platform not in mappings_dict.keys():
             raise ValueError("Invalid platform.", platform)
 
         self.platform = platform
+        if not remove_field_from_mapping:
+            return
         index = mapping.index(platform_kv)
         mapping.pop(index)
 
@@ -161,6 +180,7 @@ class Mapping:
         ret += "  }\n}"
         return ret
 
+
     def serialize(self):
         ret = "%s,%s," % (self.guid, self.name)
         sorted_keys = sorted(self.__keys.items())
@@ -169,114 +189,60 @@ class Mapping:
         ret += "platform:%s," % (self.platform)
         return ret
 
-# https://hg.libsdl.org/SDL/rev/20855a38e048
-def convert_guids(filename):
-    global current_line
-    global current_lineno
-    input_file = open(filename, 'r')
-    out_file = open("gamecontrollerdb_converted.txt", 'w')
-    for lineno, line in enumerate(input_file):
-        current_line = line
-        current_lineno = lineno + 1
-        if line.startswith('#') or line == '\n':
-            out_file.write(line)
-            continue
-        splitted = line[:-1].split(',', 2)
-        guid = splitted[0]
-        if get_platform(splitted[2]) == "Windows":
-            if guid[20:32] != "504944564944":
-                out_file.write(line)
-                continue
+
+    # https://hg.libsdl.org/SDL/rev/20855a38e048
+    def convert_guid(self):
+        if self.platform == "Windows":
+            if self.guid[20:32] != "504944564944":
+                return
+
+            guid = self.guid
             guid = guid[:20] + "000000000000"
             guid = guid[:16] + guid[4:8] + guid[20:]
             guid = guid[:8] + guid[:4] + guid[12:]
             guid = "03000000" + guid[8:]
             guid = guid.lower()
-        elif get_platform(splitted[2]) == "Mac OS X":
-            if guid[4:16] != "000000000000" or guid[20:32] != "000000000000":
-                out_file.write(line)
-                continue
+            print("Converted %s GUID. From %s to %s" % (self.name, self.guid,
+                    guid))
+            self.guid = guid
+
+        elif self.platform == "Mac OS X":
+            if self.guid[4:16] != "000000000000" \
+                    or self.guid[20:32] != "000000000000":
+                return
+
+            guid = self.guid
             guid = guid[:20] + "000000000000"
             guid = guid[:8] + guid[:4] + guid[12:]
             guid = "03000000" + guid[8:]
             guid = guid.lower()
-        else:
-            out_file.write(line)
-            continue
+            print("Converted %s GUID. From %s to %s" % (self.name, self.guid,
+                    guid))
+            self.guid = guid
 
-        out = line.replace(splitted[0], guid)
-        out_file.write(out)
-        print("\nConverted :\t" + splitted[0] + "\nTo :\t\t" + guid)
-    out_file.close()
-    input_file.close()
-    shutil.copyfile(input_file.name, ".bak." + input_file.name)
-    shutil.move("gamecontrollerdb_converted.txt", "gamecontrollerdb.txt")
-
-def add_missing_platforms(filename):
-    global current_line
-    global current_lineno
-    input_file = open(filename, 'r')
-    out_file = open("gamecontrollerdb_platforms.txt", 'w')
-    for lineno, line in enumerate(input_file):
-        current_line = line
-        current_lineno = lineno + 1
-        if line.startswith('#') or line == '\n':
-            out_file.write(line)
-            continue
-        splitted = line[:-1].split(',', 2)
-        guid = splitted[0]
-        platform = get_platform(splitted[2])
-        if platform:
-                out_file.write(line)
-                continue
-
-        out = line[0:-1]
-        if guid[20:32] == "504944564944":
-            print("Adding Windows platform to #" + str(lineno) + " :\n" + line)
-            out += "platform:Windows,"
-        elif guid[4:16] == "000000000000" and guid[20:32] == "000000000000":
-            print("Adding Mac OS X platform to #" + str(lineno) + " :\n" + line)
-            out += "platform:Mac OS X,"
-        else:
-            print("Adding Linux platform to #" + str(lineno) + " :\n" + line)
-            out += "platform:Linux,"
-        out += "\n"
-        out_file.write(out)
-    out_file.close()
-    input_file.close()
-    shutil.copyfile(input_file.name, ".bak." + input_file.name)
-    shutil.move("gamecontrollerdb_platforms.txt", "gamecontrollerdb.txt")
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("input_file", help="database file to check, \
-        ex. gamecontrollerdb.txt")
+    parser.add_argument("input_file", help="database file to check, " \
+        "ex. gamecontrollerdb.txt")
     parser.add_argument("--format", help="sorts, formats and removes duplicates",
             action="store_true")
-
-# Disable misc tools until refactor
-#    parser.add_argument("--convert_guids", help="convert Windows and macOS \
-#            GUIDs to the newer SDL 2.0.5 format. Skips checks!",
-#            action="store_true")
-#    parser.add_argument("--add_missing_platform", help="adds a platform \
-#            field if it is missing (on older pre 2.0.5 entries). Skips checks!",
-#            action="store_true")
-
+    parser.add_argument("--convert_guids", help="convert Windows and macOS " \
+        "GUIDs to the newer SDL 2.0.5 format.",
+        action="store_true")
+    parser.add_argument("--add_missing_platform", help="adds a platform "\
+           "field if it is missing on Windows and Mac OS X 2.0.4 entries.",
+           action="store_true")
     args = parser.parse_args()
 
-    # Misc tools.
-#    if args.convert_guids:
-#        print("Converting GUIDs to SDL 2.0.5 format.")
-#        convert_guids(args.input_file)
-#        return
-#
-#    if args.add_missing_platform:
-#        print("Adding missing platforms.")
-#        add_missing_platforms(args.input_file)
-#        return
+    if args.add_missing_platform:
+        print("Will try to add missing platforms. Requires SDL 2.0.4 GUID.")
+        if not args.format:
+            print("Use --format option to save database. Running in debug "\
+                    "output mode...")
 
     # Tests.
-    print("Applying checks.")
+    print("\nApplying checks.")
     global mappings_dict # { "platform": { "guid": Mapping }}
     success = True
     input_file = open(args.input_file, mode="r")
@@ -285,11 +251,11 @@ def main():
         if line.startswith('#') or line == '\n':
             continue
         try:
-            mapping = Mapping(line, lineno + 1)
+            mapping = Mapping(line, lineno + 1, args.add_missing_platform)
         except ValueError as e:
-            print("Error at line #" + str(lineno + 1))
+            print("\nError at line #" + str(lineno + 1))
             print(e.args)
-            print("\nIn mapping")
+            print("In mapping")
             print(line)
             success = False
             continue
@@ -298,7 +264,7 @@ def main():
             print("Duplicate detected at line #" + str(lineno + 1))
             prev_mapping = mappings_dict[mapping.platform][mapping.guid]
             print("Previous mapping at line #" + str(prev_mapping.linenumber))
-            print("\nIn mapping")
+            print("In mapping")
             print(line)
             success = False
             continue
@@ -310,6 +276,17 @@ def main():
         print("No mapping errors found.")
     else:
         sys.exit(1)
+
+    # Misc tools.
+    if args.convert_guids:
+        print("Converting GUIDs to SDL 2.0.5+ format.")
+        if not args.format:
+            print("Use --format option to save database. Running in debug " \
+                    "output mode...")
+
+        for platform,p_dict in mappings_dict.items():
+            for guid,mapping in p_dict.items():
+                mapping.convert_guid()
 
     if args.format:
         print("\nFormatting db.")
