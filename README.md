@@ -59,12 +59,12 @@ Run it with:
 python check.py gamecontrollerdb.txt
 ```
 
-Once no checks are detected, run the script with the `--format` option to sort the database in the appropriate format.
+Once no issues are detected, run the script with the `--format` option to sort the database in the appropriate format.
 ```
 python check.py --format gamecontrollerdb.txt
 ```
 
-If no errors were generated you can (please) send a Pull Request! Tests are automatically run on Pull Requests, so you'll easily see if there is an issue.
+You may now send a Pull Request. Tests are automatically run on Pull Requests, so you'll easily see if there is an issue.
 
 ### Checks
 - GUID is correct length and is hexadecimal.
