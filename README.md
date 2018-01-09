@@ -54,36 +54,41 @@ SDL_GameControllerAddMappingsFromFile("gamecontrollerdb.txt");
 The currently active version is gamecontrollerdb.txt. If your mappings work on older SDL versions, you can add them to the appropriate files.
 Before submitting a new Pull Request, please run the `check.py` tool to make sure everything is in order.
 
-*The `check.py` script requires python 3.* Run it with:
+Run it with:
 ```
 python check.py gamecontrollerdb.txt
 ```
 
+Once no checks are detected, run the script with the `--format` option to sort the database in the appropriate format.
+```
+python check.py --format gamecontrollerdb.txt
+```
+
 If no errors were generated you can (please) send a Pull Request! Tests are automatically run on Pull Requests, so you'll easily see if there is an issue.
 
-### New Checks
-- Tests are run to ensure a platform is present.
-- Tests are run to make sure inversion and range modifiers are applied to axis fields.
-- Tests are run to check for duplicates.
+### Checks
+- GUID is correct length and is hexadecimal.
+- Platform is present and supported.
+- Inversion and range modifiers are applied to axis fields.
+- No duplicate mappings.
+- No duplicate keys.
+- Buttons conform to supported values.
+
+### Formatting
+- The database is sorted by platform, then by name.
+- Individual mapping keys are sorted alphabetically.
+- Names are parsed for extraneous spaces.
 
 ### Options
 ```
-usage: check.py [-h] [--sort] [--convert_guids] [--remove_dupes]
-                [--add_missing_platform]
-                input_file
+usage: check.py [-h] [--format] input_file
 
 positional arguments:
-  input_file            database file to check (gamecontrollerdb.txt)
+  input_file  database file to check, ex. gamecontrollerdb.txt
 
 optional arguments:
-  -h, --help            show this help message and exit
-  --sort                sort the database on success
-  --convert_guids       convert Windows and macOS GUIDs to the newer SDL 2.0.5
-                        format
-  --remove_dupes        automatically remove duplicates
-  --add_missing_platform
-                        adds a platform field if it is missing (on older pre
-                        2.0.5 entries). Skips checks!
+  -h, --help  show this help message and exit
+  --format    sorts, formats and removes duplicates
 ```
 
 ## References
