@@ -1,201 +1,173 @@
 #!/usr/bin/env python
 
-#import fileinput
-import string
 import sys
+# if sys.version_info[0] != 3:
+#     print("This script requires Python 3.")
+#     exit(1)
+
 from collections import defaultdict
+from collections import namedtuple
+import string
 import collections
 import shutil
 import argparse
+import csv
+import re
 
-success = True
-current_line = ""
-current_lineno = 0
-entry_dict = defaultdict(tuple)
-dupe_dict = defaultdict(list)
+FILE_HEADER = "# Game Controller DB for SDL in post 2.0.6 format\n\
+# Source: https://github.com/gabomdq/SDL_GameControllerDB\n"
 
-def get_current_line():
-    return current_line
+mappings_dict = {
+    "Windows": {},
+    "Mac OS X": {},
+    "Linux": {},
+}
 
-def get_current_lineno():
-    return current_lineno
+class Mapping:
+    BUTTON_REGEXES = {
+        "+a": re.compile(r"^[0-9]+\~?$"),
+        "-a": re.compile(r"^[0-9]+\~?$"),
+        "a": re.compile(r"^[0-9]+\~?$"),
+        "b": re.compile(r"^[0-9]+$"),
+        "h": re.compile(r"^[0-9]+\.(0|1|2|4|8|3|6|12|9)$"),
+    }
 
-def error (message):
-    global success
-    success = False
-    print("Error at line #" + str(get_current_lineno()), ":", message)
-    print(get_current_line())
+    def __init__(self, mappingstring, linenumber):
+        self.guid = ""
+        self.name = ""
+        self.platform = ""
+        self.linenumber = 0
+        self.__keys = {
+            "+leftx": "",
+            "+lefty": "",
+            "+rightx": "",
+            "+righty"
+            "-leftx": "",
+            "-lefty": "",
+            "-rightx": "",
+            "-righty": "",
+            "a": "",
+            "b": "",
+            "back": "",
+            "dpdown": "",
+            "dpleft": "",
+            "dpright": "",
+            "dpup": "",
+            "guide": "",
+            "leftshoulder": "",
+            "leftstick": "",
+            "lefttrigger": "",
+            "leftx": "",
+            "lefty": "",
+            "rightshoulder": "",
+            "rightstick": "",
+            "righttrigger": "",
+            "rightx": "",
+            "righty": "",
+            "start": "",
+            "x": "",
+            "y": "",
+        }
 
-def check_guid (guid):
-    if guid == "xinput":
-        return
-    if len (guid) != 32:
-        error ("The length of the guid string must be equal to 32")
-    for c in guid:
-        if not c in string.hexdigits:
-            error ("Each character in guid string must be a hex character "
-                + string.hexdigits)
+        self.linenumber = linenumber
+        reader = csv.reader([mappingstring], skipinitialspace=True)
+        mapping = next(reader)
+        mapping = list(filter(None, mapping))
+        self.set_guid(mapping[0])
+        mapping.pop(0)
+        self.set_name(mapping[0])
+        mapping.pop(0)
+        self.set_platform(mapping)
+        self.set_keys(mapping)
+        self.remove_empty_mappings()
 
-def check_mapping (mappingstring):
-    keys = ["platform", "leftx", "lefty", "rightx", "righty", "a", "b", \
-            "back", "dpdown", \
-            "dpleft", "dpright", "dpup", "guide", "leftshoulder", "leftstick", \
-            "lefttrigger", "rightshoulder", "rightstick", "righttrigger", \
-            "start", "x", "y", "-leftx", "-lefty", "-rightx", "-righty", \
-            "+leftx", "+lefty", "+rightx", "+righty"]
-    platforms = ["Linux", "Mac OS X", "Windows"]
-    mappings = mappingstring.split (',')
-    for mapping in mappings:
-        if not mapping:
-            continue
-        if len (mapping.split(':')) != 2:
-            error ("Invalid mapping : " + mapping)
-            continue
-        key = mapping.split (':')[0]
-        value = mapping.split (':')[1]
-        if not key in keys:
-            error ("Invalid key \"" + key + "\" in mapping string")
 
-        # Check values
-        if key == "platform":
-            if value not in platforms:
-                error ("Invalid platform \"" + value + "\" in mapping string")
-        else:
-            if not value:
+    def set_guid(self, guid):
+        if guid == "xinput":
+            self.guid = guid
+            return
+
+        if len(guid) != 32:
+            raise ValueError("GUID length must be 32.", guid)
+
+        hex_digits = set(string.hexdigits)
+        if not all(c in hex_digits for c in guid):
+            raise ValueError("GUID malformed.", guid)
+
+        self.guid = guid
+
+
+    def set_name(self, name):
+        name = re.sub(r" +", " ", name)
+        self.name = name
+
+
+    def set_platform(self, mapping):
+        platform_kv = next((x for x in mapping if "platform:" in x), None)
+        if platform_kv == None:
+            raise ValueError("Required 'platform' field not found.")
+
+        platform = platform_kv.split(':')[1]
+
+        if platform not in mappings_dict.keys():
+            raise ValueError("Invalid platform.", platform)
+
+        self.platform = platform
+        index = mapping.index(platform_kv)
+        mapping.pop(index)
+
+
+    def set_keys(self, mapping):
+        throw = False
+        error_msg = ""
+
+        for kv in mapping:
+            button_key, button_val = kv.split(':')
+
+            if not button_key in self.__keys:
+                raise ValueError("Unrecognized key.", button_key)
+
+            # Gather duplicates.
+            if self.__keys[button_key] is not "":
+                throw = True
+                error_msg += "%s (was %s:%s), " \
+                        % (kv, button_key, self.__keys[button_key])
                 continue
-            if value[0] in ['-', '+']:
-                if not value[1] == 'a':
-                    error ("Invalid value \"" + value + "\" for key \"" + key +
-                           "\". Inversion and range modifiers only valid for " +
-                                   "axis (a).")
-                if not value[2:].isdigit():
-                    error ("Invalid value \"" + value + "\" for key \"" + key +
-                           "\". Should be followed by a number after 'a'")
-            elif not value[0] in ['a', 'h', 'b']:
-                error ("Invalid value \"" + value + "\" for key \"" + key +
-                       "\". Should start with a, b, or h")
-            elif value[0] in ['a', 'b']:
-                if value[0] == 'a' and value[-1] in ['~']:
-                    if not value[1:-1].isdigit():
-                        error ("Invalid value \"" + value + "\" for key \""
-                                + key + "\". Should be followed by a number " +
-                                "after 'a'")
-                elif not value[1:].isdigit():
-                    error ("Invalid value \"" + value + "\" for key \"" + key +
-                           "\". Should be followed by a number after 'a' or " +
-                           "'b'")
-            else:
-                dpad_positions = map(str, [0, 1, 2, 4, 8, 1|2, 2|4, 4|8, 8|1])
-                dpad_index = value[1:].split ('.')[0]
-                dpad_position = value[1:].split ('.')[1]
-                if not dpad_index.isdigit():
-                    error ("Invalid value \"" + value + "\" for key \"" + key +
-                           "\". Dpad index \"" + dpad_index + "\" should be " +
-                           "a number")
-                if not dpad_position in dpad_positions:
-                    error ("Invalid value \"" + value + "\" for key \"" + key +
-                           "\". Dpad position \"" + dpad_position + "\" " +
-                           "should be one of" + ', '.join(dpad_positions))
 
-def get_platform (mappingstring):
-    mappings = mappingstring.split (',')
-    for mapping in mappings:
-        if not mapping:
-            continue
-        if len (mapping.split(':')) != 2:
-            continue
-        key = mapping.split(':')[0]
-        value = mapping.split(':')[1]
-        if key == "platform":
-            return value
-    error ("No platform specified " + mapping)
+            for butt,regex in self.BUTTON_REGEXES.items():
+                if not button_val.startswith(butt):
+                    continue
 
-def has_duplicate(guids):
-    seen = set()
-    seen_add = seen.add
-    seen_twice = set( x for x in guids if x in seen or seen_add(x) )
-    return len(seen_twice) != 0
+                val = button_val.replace(butt, "")
+                if not regex.match(val):
+                    raise ValueError("Invalid value.", butt, val)
 
-def check_duplicates(guid, platform):
-    guids = list(dupe_dict[platform])
-    guids.append(guid)
-    if has_duplicate(guids):
-        error("\nDuplicate entry :")
-        print("Original at line #" + entry_dict[guid][0] +
-                ":\n" + entry_dict[guid][1])
-    else:
-        dupe_dict[platform].append(guid)
-        entry_dict[guid] = (str(get_current_lineno()), get_current_line())
+                self.__keys[button_key] = button_val
+                break
 
-def is_duplicate(guid, platform):
-    guids = list(dupe_dict[platform])
-    guids.append(guid)
-    if has_duplicate(guids):
-        return True
-    else:
-        dupe_dict[platform].append(guid)
-        return False
+        if throw:
+            raise ValueError("Duplicate keys detected.", error_msg)
 
-def do_tests(filename):
-    global current_line
-    global current_lineno
-    input_file = open(filename, 'r')
-    for lineno, line in enumerate(input_file):
-        current_line = line
-        current_lineno = lineno + 1
-        if line.startswith('#') or line == '\n':
-            continue
-        splitted = line[:-1].split(',', 2)
-        if len(splitted) < 3 or not splitted[0] or not splitted[1] \
-            or not splitted[2]:
-            error ("Either GUID/Name/Mappingstring is missing or empty")
-        check_guid(splitted[0])
-        check_mapping(splitted[2])
-        check_duplicates(splitted[0].lower(), get_platform(splitted[2]))
+    def remove_empty_mappings(self):
+        self.__keys = {k:v for (k,v) in self.__keys.items() if v is not ""}
 
-    input_file.close()
+    def __str__(self):
+        ret = "Mapping {\n  guid: %s\n  name: %s\n  platform: %s\n" \
+            % (self.guid, self.name, self.platform)
 
-def sort_by_name(filename):
-    global current_line
-    global current_lineno
-    input_file = open(filename, 'r')
-    sorted_dict = dict({"Windows": list(tuple()), "Mac OS X": list(tuple()), \
-            "Linux": list(tuple())})
+        ret += "  Keys {\n"
+        for key,val in self.__keys.items():
+            ret += "    %s: %s\n" % (key, val)
 
-    header_message = ""
+        ret += "  }\n}"
+        return ret
 
-    for lineno, line in enumerate(input_file):
-        current_line = line
-        current_lineno = lineno + 1
-
-        if current_lineno == 1 or current_lineno == 2:
-            header_message += line
-            continue
-        if line.startswith('#') or line == '\n':
-            continue
-        splitted = line[:-1].split(',', 2)
-        if len(splitted) < 3 or not splitted[0] or not splitted[1] \
-            or not splitted[2]:
-            continue
-        platform = get_platform(splitted[2])
-        sorted_dict[platform].append((splitted[1], line))
-
-    out_file = open("gamecontrollerdb_sorted.txt", 'w')
-    out_file.write(header_message)
-
-    for platform, name_tuples in sorted_dict.items():
-        if platform != "Windows":
-            out_file.write("\n")
-        out_file.write("# " + platform + "\n")
-        for tuples in sorted(name_tuples, key=lambda tup: tup[0].lower()):
-            out = tuples[1]
-            if out[-1] != '\n':
-                out += '\n'
-            out_file.write(out)
-    out_file.close()
-    input_file.close()
-    shutil.copyfile(input_file.name, ".bak." + input_file.name)
-    shutil.move("gamecontrollerdb_sorted.txt", "gamecontrollerdb.txt")
+    def serialize(self):
+        ret = "%s,%s," % (self.guid, self.name)
+        for key,val in self.__keys.items():
+            ret += "%s:%s," % (key, val)
+        ret += "platform:%s," % (self.platform)
+        return ret
 
 # https://hg.libsdl.org/SDL/rev/20855a38e048
 def convert_guids(filename):
@@ -240,30 +212,6 @@ def convert_guids(filename):
     shutil.copyfile(input_file.name, ".bak." + input_file.name)
     shutil.move("gamecontrollerdb_converted.txt", "gamecontrollerdb.txt")
 
-def remove_dupes(filename):
-    global current_line
-    global current_lineno
-    global dupe_dict
-    dupe_dict = defaultdict(list)
-    input_file = open(filename, 'r')
-    out_file = open("gamecontrollerdb_dupes_removed.txt", 'w')
-    for lineno, line in enumerate(input_file):
-        current_line = line
-        current_lineno = lineno + 1
-        if line.startswith('#') or line == '\n':
-            out_file.write(line)
-            continue
-        splitted = line[:-1].split(',', 2)
-        guid = splitted[0].lower()
-        if is_duplicate(guid, get_platform(splitted[2])):
-            print("Duplicate detected, removing :\n" + line)
-            continue
-        out_file.write(line)
-    out_file.close()
-    input_file.close()
-    shutil.copyfile(input_file.name, ".bak." + input_file.name)
-    shutil.move("gamecontrollerdb_dupes_removed.txt", "gamecontrollerdb.txt")
-
 def add_missing_platforms(filename):
     global current_line
     global current_lineno
@@ -301,44 +249,87 @@ def add_missing_platforms(filename):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("input_file", help="database file to check \
-        (gamecontrollerdb.txt)")
-    parser.add_argument("--sort", help="sort the database on success",
-        action="store_true")
-    parser.add_argument("--convert_guids", help="convert Windows and macOS \
-            GUIDs to the newer SDL 2.0.5 format", action="store_true")
-    parser.add_argument("--remove_dupes", help="automatically remove \
-            duplicates", action="store_true")
-    parser.add_argument("--add_missing_platform", help="adds a platform \
-            field if it is missing (on older pre 2.0.5 entries). Skips checks!",
+    parser.add_argument("input_file", help="Database file to check, \
+        ex. gamecontrollerdb.txt.")
+    parser.add_argument("--format", help="Should be run before a pull \
+            request. Sorts, formats and removes duplicates.",
             action="store_true")
+
+# Disable misc tools until refactor
+#    parser.add_argument("--convert_guids", help="convert Windows and macOS \
+#            GUIDs to the newer SDL 2.0.5 format. Skips checks!",
+#            action="store_true")
+#    parser.add_argument("--add_missing_platform", help="adds a platform \
+#            field if it is missing (on older pre 2.0.5 entries). Skips checks!",
+#            action="store_true")
+
     args = parser.parse_args()
 
-    if args.add_missing_platform:
-        print("Adding missing platforms.")
-        add_missing_platforms(args.input_file)
-        return
+    # Misc tools.
+#    if args.convert_guids:
+#        print("Converting GUIDs to SDL 2.0.5 format.")
+#        convert_guids(args.input_file)
+#        return
+#
+#    if args.add_missing_platform:
+#        print("Adding missing platforms.")
+#        add_missing_platforms(args.input_file)
+#        return
 
+    # Tests.
     print("Applying checks.")
-    do_tests(args.input_file)
+    global mappings_dict # { "platform": { "guid": Mapping }}
+    success = True
+    input_file = open(args.input_file, mode="r")
 
-    if args.remove_dupes:
-        print("Removing duplicates.")
-        remove_dupes(args.input_file)
+    for lineno, line in enumerate(input_file):
+        if line.startswith('#') or line == '\n':
+            continue
+        try:
+            mapping = Mapping(line, lineno + 1)
+        except ValueError as e:
+            print("Error at line #" + str(lineno + 1))
+            print(e.args)
+            print("\nIn mapping")
+            print(line)
+            success = False
+            continue
+
+        if mapping.guid in mappings_dict[mapping.platform]:
+            print("Duplicate detected at line #" + str(lineno + 1))
+            prev_mapping = mappings_dict[mapping.platform][mapping.guid]
+            print("Previous mapping at line #" + str(prev_mapping.linenumber))
+            print("\nIn mapping")
+            print(line)
+            success = False
+            continue
+
+        mappings_dict[mapping.platform][mapping.guid] = mapping
+    input_file.close()
 
     if success:
         print("No mapping errors found.")
-        if args.sort:
-            print("Sorting by human readable name.")
-            sort_by_name(args.input_file)
-        if args.convert_guids:
-            print("Converting GUIDs to SDL 2.0.5 format.")
-            convert_guids(args.input_file)
-            if args.remove_dupes:
-                print("Removing duplicates again.")
-                remove_dupes(args.input_file)
     else:
         sys.exit(1)
 
+    if args.format:
+        print("\nFormatting db.")
+        out_file = open("gamecontrollerdb_formatted.txt", 'w')
+        out_file.write(FILE_HEADER)
+        for platform,p_dict in mappings_dict.items():
+            out_file.write("\n")
+            out_file.write("# " + platform + "\n")
+            sorted_p_dict = sorted(p_dict.items(),
+                    key=lambda x: x[1].name.lower())
+
+            for guid,mapping in sorted_p_dict:
+                out_file.write(mapping.serialize() + "\n")
+
+        out_file.close()
+        shutil.copyfile(input_file.name, ".bak." + input_file.name)
+        shutil.move("gamecontrollerdb_formatted.txt", "gamecontrollerdb.txt")
+
+
 if __name__ == "__main__":
     main()
+
