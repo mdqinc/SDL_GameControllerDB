@@ -6,6 +6,7 @@ import sys
 #     exit(1)
 
 from os import path
+from collections import OrderedDict
 import string
 import collections
 import shutil
@@ -16,12 +17,12 @@ import re
 FILE_HEADER = "# Game Controller DB for SDL in 2.0.6 format\n" \
         "# Source: https://github.com/gabomdq/SDL_GameControllerDB\n"
 
-mappings_dict = {
-    "Windows": {},
-    "Mac OS X": {},
-    "Linux": {},
-    "Android": {},
-}
+mappings_dict = OrderedDict([
+    ("Windows", {}),
+    ("Mac OS X", {}),
+    ("Linux", {}),
+    ("Android", {}),
+])
 
 parser = argparse.ArgumentParser()
 parser.add_argument("input_file", help="database file to check, " \
