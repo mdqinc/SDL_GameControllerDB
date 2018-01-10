@@ -22,6 +22,7 @@ mappings_dict = OrderedDict([
     ("Mac OS X", {}),
     ("Linux", {}),
     ("Android", {}),
+    ("iOS", {}),
 ])
 
 parser = argparse.ArgumentParser()
@@ -243,8 +244,10 @@ def import_header(filepath):
         OSX = 2
         LINUX = 3
         ANDROID = 4
-        NONE = 5
+        IOS = 5
+        NONE = 6
 
+    global mappings_dict # { "platform": { "guid": Mapping }}
     current_platform = Platform.NONE
 
     input_file = open(filepath, mode="r")
@@ -263,6 +266,9 @@ def import_header(filepath):
             continue
         elif "#if defined(__ANDROID__)" in line:
             current_platform = Platform.ANDROID
+            continue
+        elif "#if defined(SDL_JOYSTICK_MFI)" in line:
+            current_platform = Platform.IOS
             continue
         elif "#endif" in line:
             current_platform = Platform.NONE
@@ -284,8 +290,10 @@ def import_header(filepath):
             mapping_string += "platform:Linux,"
         if current_platform == Platform.ANDROID:
             mapping_string += "platform:Android,"
+        if current_platform == Platform.IOS:
+            mapping_string += "platform:iOS,"
 
-        # print(mapping_string)
+        print(mapping_string)
 
         try:
             mapping = Mapping(mapping_string, lineno + 1)
@@ -295,6 +303,7 @@ def import_header(filepath):
             print("Ignoring mapping")
             print(line)
             continue
+        mappings_dict[mapping.platform][mapping.guid] = mapping
     input_file.close()
 
 
