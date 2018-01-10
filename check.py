@@ -237,7 +237,7 @@ class Mapping:
             self.guid = guid
 
 
-def import_header(filepath):
+def import_header(filepath, debug_out = False):
     class Platform:
         XINPUT = 0
         WINDOWS = 1
@@ -293,8 +293,6 @@ def import_header(filepath):
         if current_platform == Platform.IOS:
             mapping_string += "platform:iOS,"
 
-        print(mapping_string)
-
         try:
             mapping = Mapping(mapping_string, lineno + 1)
         except ValueError as e:
@@ -303,6 +301,10 @@ def import_header(filepath):
             print("Ignoring mapping")
             print(line)
             continue
+
+        if debug_out:
+            print("%s : Importing %s" % (mapping.platform, mapping.name))
+
         mappings_dict[mapping.platform][mapping.guid] = mapping
     input_file.close()
 
@@ -371,7 +373,7 @@ def main():
         if not args.format:
             print("Use --format option to save database. Running in debug "\
                     "output mode...")
-        import_header(args.import_header)
+        import_header(args.import_header, not args.format)
 
     if args.format:
         print("\nFormatting db.")
