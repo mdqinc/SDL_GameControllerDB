@@ -40,6 +40,8 @@ parser.add_argument("--import_header", metavar="sdl_header",
         help="imports and overrides mappings using SDL_gamecontrollerdb.h")
 
 class Mapping:
+    GUID_REGEX = re.compile(r"^(xinput|[0-9a-fA-F]{32,32})$")
+
     BUTTON_REGEXES = {
         "+a": re.compile(r"^[0-9]+\~?$"),
         "-a": re.compile(r"^[0-9]+\~?$"),
@@ -101,15 +103,7 @@ class Mapping:
 
 
     def set_guid(self, guid):
-        if guid == "xinput":
-            self.guid = guid
-            return
-
-        if len(guid) != 32:
-            raise ValueError("GUID length must be 32.", guid)
-
-        hex_digits = set(string.hexdigits)
-        if not all(c in hex_digits for c in guid):
+        if not self.GUID_REGEX.match(guid):
             raise ValueError("GUID malformed.", guid)
 
         self.guid = guid
