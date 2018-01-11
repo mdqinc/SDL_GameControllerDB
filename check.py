@@ -204,7 +204,7 @@ class Mapping:
     def convert_guid(self):
         if self.platform == "Windows":
             if self.guid[20:32] != "504944564944":
-                return
+                return False
 
             guid = self.guid
             guid = guid[:20] + "000000000000"
@@ -212,23 +212,27 @@ class Mapping:
             guid = guid[:8] + guid[:4] + guid[12:]
             guid = "03000000" + guid[8:]
             guid = guid.lower()
-            print("Converted %s GUID. From %s to %s" % (self.name, self.guid,
-                    guid))
+            print("%s : Converted %s GUID. From %s to %s" \
+                %(self.platform, self.name, self.guid, guid))
             self.guid = guid
 
         elif self.platform == "Mac OS X":
             if self.guid[4:16] != "000000000000" \
                     or self.guid[20:32] != "000000000000":
-                return
+                return False
 
             guid = self.guid
             guid = guid[:20] + "000000000000"
             guid = guid[:8] + guid[:4] + guid[12:]
             guid = "03000000" + guid[8:]
             guid = guid.lower()
-            print("Converted %s GUID. From %s to %s" % (self.name, self.guid,
-                    guid))
+            print("%s : Converted %s GUID. From %s to %s" \
+                % (self.platform, self.name, self.guid, guid))
             self.guid = guid
+
+        else:
+            return False
+        return True
 
 
 def import_header(filepath, debug_out = False):
@@ -360,7 +364,17 @@ def main():
                     "output mode...")
         for platform,p_dict in mappings_dict.items():
             for guid,mapping in p_dict.items():
-                mapping.convert_guid()
+                if mapping.convert_guid():
+                    del mappings_dict[platform][guid]
+                    if mapping.guid in mappings_dict[platform]:
+                        print("\nDuplicate detected when converting GUID.")
+                        prev_mapping = mappings_dict[platform][mapping.guid]
+                        print("Previous mapping %s" % prev_mapping.name)
+                        print("Ignoring new mapping")
+                        print(mapping.serialize())
+                        print("\n")
+                        continue
+                    mappings_dict[platform][mapping.guid] = mapping
 
     if args.import_header is not None:
         print("Importing mappings from SDL_gamecontrollerdb.h.")
