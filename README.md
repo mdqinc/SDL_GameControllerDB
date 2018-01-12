@@ -21,6 +21,12 @@ A mapping looks like this :
 ```
 It is comprised of a controller GUID (`030000004c050000c405000000010000`), a name (`PS4 Controller`), button / axis mappings (`leftshoulder:b4`) and a platform (`platform:Mac OS X`).
 
+## Naming Convention
+- If the controller has a unique name, use that (ex. XBox Controller, XBox One Controller).
+- If the controller doesn't have a unique name, or when in doubt, use brand + model (ex. ACME GA09, 8Bitdo NES30 Pro).
+- You can add `Wireless` for controllers with such an option. (ex. XBox Wireless Controller).
+
+## Mapping Tools
 There are a few different tools that let you create mappings.
 
 ### [SDL2 ControllerMap](https://www.libsdl.org/download-2.0.php)
