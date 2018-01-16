@@ -59,7 +59,7 @@ class Mapping:
             "+leftx": "",
             "+lefty": "",
             "+rightx": "",
-            "+righty"
+            "+righty": "",
             "-leftx": "",
             "-lefty": "",
             "-rightx": "",
