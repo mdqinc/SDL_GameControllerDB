@@ -47,7 +47,7 @@ class Mapping:
         "-a": re.compile(r"^[0-9]+\~?$"),
         "a": re.compile(r"^[0-9]+\~?$"),
         "b": re.compile(r"^[0-9]+$"),
-        "h": re.compile(r"^[0-9]+\.(0|1|2|4|8|3|6|12|9)$"),
+        "h": re.compile(r"^[0-9]+\.(1|2|4|8|3|6|12|9)$"),
     }
 
     def __init__(self, mapping_string, line_number, add_missing_platform = False):
