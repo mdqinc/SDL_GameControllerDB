@@ -41,12 +41,6 @@ In Steam's Big Picture mode, configure your joystick. Then look in `[steam_insta
 
 Unfortunately, **Steam does not ouput the platform field**, so you will need to add it manually. At the end of the generated entry, add `platform:Windows,` or `platform:Mac OS X,` or `platform:Linux,`.
 
-
-### [SDL2 Gamepad Tool](http://www.generalarcade.com/gamepadtool/)
-Third party cross-platform tool with GUI (Windows, macOS and Linux).
-
-Setup your controller and copy the ouput entry. The tool currently doesn't output SDL 2.0.5 GUIDs, but that is fine as SDL still supports these GUIDs. I will convert older GUIDs in pull requests as well.
-
 ## Usage
 Download gamecontrollerdb.txt, place it in your app's directory and load it.
 
