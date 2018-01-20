@@ -41,7 +41,12 @@ In Steam's Big Picture mode, configure your joystick. Then look in `[steam_insta
 
 Unfortunately, **Steam does not ouput the platform field**, so you will need to add it manually. At the end of the generated entry, add `platform:Windows,` or `platform:Mac OS X,` or `platform:Linux,`.
 
-## Usage
+## Standard Mappings
+Some controllers are a little tricky to figure out. Here are the recommended mappings.
+
+![mapping standard](data/mapping_guide.png)
+
+# Usage
 Download gamecontrollerdb.txt, place it in your app's directory and load it.
 
 For example :
