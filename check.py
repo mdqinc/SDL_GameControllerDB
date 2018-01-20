@@ -14,8 +14,10 @@ import argparse
 import csv
 import re
 
-FILE_HEADER = "# Game Controller DB for SDL in 2.0.6 format\n" \
+FILE_HEADER = "# Game Controller DB for SDL in %s format\n" \
         "# Source: https://github.com/gabomdq/SDL_GameControllerDB\n"
+
+sdl_version = "2.0.6"
 
 mappings_dict = OrderedDict([
     ("Windows", {}),
@@ -103,8 +105,22 @@ class Mapping:
 
 
     def set_guid(self, guid):
+        global sdl_version
+
         if not self.GUID_REGEX.match(guid):
             raise ValueError("GUID malformed.", guid)
+
+        if sdl_version == "2.0.4":
+            self.guid = guid
+            return
+
+        if guid[20:32] == "504944564944":
+            raise ValueError("GUID in SDL 2.0.4 format, please update your "\
+                    "mapping software.")
+
+        if guid[4:16] == "000000000000" and guid[20:32] == "000000000000":
+            raise ValueError("GUID in SDL 2.0.4 format, please update your "\
+                    "mapping software.")
 
         self.guid = guid
 
@@ -309,15 +325,25 @@ def import_header(filepath, debug_out = False):
 
 def main():
     global mappings_dict # { "platform": { "guid": Mapping }}
+    global sdl_version
     global parser
     args = parser.parse_args()
     success = True
 
+    if "204" in args.input_file:
+        sdl_version = "2.0.4"
+    elif "205" in args.input_file:
+        sdl_version = "2.0.5"
+
     if args.add_missing_platform:
-        print("Will try to add missing platforms. Requires SDL 2.0.4 GUID.")
-        if not args.format:
-            print("Use --format option to save database. Running in debug "\
-                    "output mode...")
+        if sdl_version != "2.0.4":
+            print("Cannot add missing platforms on newer SDL database.")
+            args.add_missing_platform = False
+        else:
+            print("Will try to add missing platforms. Requires SDL 2.0.4 GUID.")
+            if not args.format:
+                print("Use --format option to save database. Running in debug "\
+                        "output mode...")
 
 
     # Tests.
@@ -387,7 +413,7 @@ def main():
         print("\nFormatting db.")
         out_filename = path.splitext(input_file.name)[0] + "_format.txt"
         out_file = open(out_filename, 'w')
-        out_file.write(FILE_HEADER)
+        out_file.write(FILE_HEADER % sdl_version)
         for platform,p_dict in mappings_dict.items():
             out_file.write("\n")
             out_file.write("# " + platform + "\n")
