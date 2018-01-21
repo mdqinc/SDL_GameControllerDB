@@ -71,13 +71,15 @@ python check.py --format gamecontrollerdb.txt
 
 You may now send a Pull Request. Tests are automatically run on Pull Requests, so you'll easily see if there is an issue.
 
-### Checks
+### Unit Tests
 - GUID is correct length and is hexadecimal.
+- GUID is in 2.0.5+ format.
 - Platform is present and supported.
 - Inversion and range modifiers are applied to axis fields.
 - No duplicate mappings.
 - No duplicate keys.
 - Buttons conform to supported values.
+- No upstream official mappings are modified.
 
 ### Formatting
 - The database is sorted by platform, then by name.
