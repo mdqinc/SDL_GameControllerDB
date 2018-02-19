@@ -463,7 +463,7 @@ def main():
             out_file.write("\n")
             out_file.write("# " + platform + "\n")
             sorted_p_dict = sorted(p_dict.items(),
-                    key=lambda x: x[1].name.lower())
+                    key=lambda x: (x[1].name+"\x00"+x[0]).lower())
 
             for guid,mapping in sorted_p_dict:
                 out_file.write(mapping.serialize() + "\n")
