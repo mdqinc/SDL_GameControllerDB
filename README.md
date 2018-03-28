@@ -29,6 +29,9 @@ It is comprised of a controller GUID (`030000004c050000c405000000010000`), a nam
 ## Mapping Tools
 There are a few different tools that let you create mappings.
 
+### [SDL2 Gamepad Tool](http://www.generalarcade.com/gamepadtool/)
+Third party cross-platform tool with GUI (Windows, macOS and Linux). Probably the easiest tool to use.
+
 ### [SDL2 ControllerMap](https://www.libsdl.org/download-2.0.php)
 The controllermap utility provided with SDL2 is the official tool to create these mappings, it runs on all the platforms SDL runs (Windows, Mac, Linux, iOS, Android, etc).
 
