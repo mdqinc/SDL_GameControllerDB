@@ -82,6 +82,7 @@ You may now send a Pull Request. Tests are automatically run on Pull Requests, s
 - No duplicate mappings.
 - No duplicate keys.
 - Buttons conform to supported values.
+- Hats aren't 0 or diagonals.
 - No upstream official mappings are modified.
 
 ### Formatting
