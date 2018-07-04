@@ -73,6 +73,9 @@ class Mapping:
     }
 
     def __init__(self, mapping_string, line_number, add_missing_platform = False):
+        if not mapping_string.endswith(",\n") and not mapping_string.endswith(","):
+            raise ValueError("Mapping should end with comma (,)")
+
         self.guid = ""
         self.name = ""
         self.platform = ""
