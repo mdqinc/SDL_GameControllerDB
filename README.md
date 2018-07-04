@@ -84,6 +84,7 @@ You may now send a Pull Request. Tests are automatically run on Pull Requests, s
 - Buttons conform to supported values.
 - Hats aren't 0 or diagonals.
 - No upstream official mappings are modified.
+- All mappings end with a comma.
 
 ### Formatting
 - The database is sorted by platform, then by name.
