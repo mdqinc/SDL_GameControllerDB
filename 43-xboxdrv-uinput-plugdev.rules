@@ -1,6 +1,0 @@
-# This rule was added for xboxdrv.
-# Allows non-root users to access uinput
-KERNEL=="uinput", SUBSYSTEM=="misc", OPTIONS+="static_node=uinput", TAG+="uaccess"
-
-# Added to support bluetooth symlink for iPega PG-9069 for xboxdrv
-SUBSYSTEM=="input", SUBSYSTEMS=="input", ATTRS{name}=="PG-9069", TAG+="uaccess", SYMLINK+="input/ipega9069", ENV{ID_INPUT_JOYSTICK}="1"
