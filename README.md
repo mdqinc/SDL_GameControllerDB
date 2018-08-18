@@ -113,7 +113,8 @@ optional arguments:
                         SDL_gamecontrollerdb.h
 ```
 
-## References
+## Resources
 
 * [SDL2](http://www.libsdl.org)
 * [SDL_GameControllerAddMappingsFromFile](http://wiki.libsdl.org/SDL_GameControllerAddMappingsFromFile)
+* [lisp bindings](https://github.com/cbaggers/sdl2-game-controller-db)
