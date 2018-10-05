@@ -42,7 +42,7 @@ In Steam's Big Picture mode, configure your joystick. Then look in `[steam_insta
 "SDL_GamepadBind"		"030000004c050000c405000000010000,PS4 Controller,a:b1,b:b2,back:b8,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,guide:b12,leftshoulder:b4,leftstick:b10,lefttrigger:a3,leftx:a0,lefty:a1,rightshoulder:b5,rightstick:b11,righttrigger:a4,rightx:a2,righty:a5,start:b9,x:b0,y:b3,"
 ```
 
-Unfortunately, **Steam does not output the platform field**, so you will need to add it manually. At the end of the generated entry, add `platform:Windows,` or `platform:Mac OS X,` or `platform:Linux,`.
+Unfortunately, **Steam does not output the platform field**, so you will need to add it manually. At the end of the generated entry, add `platform:Windows,` or `platform:Mac OS X,` or `platform:Linux,` (with the trailing comma).
 
 ## Standard Mappings
 Some controllers are a little tricky to figure out. Here are the recommended mappings.
@@ -56,6 +56,11 @@ For example :
 ```
 SDL_GameControllerAddMappingsFromFile("gamecontrollerdb.txt");
 ```
+
+## Upstream SDL Mappings
+This project includes all mappings from the latest SDL_gamecontrollerdb.h. The community db adds a superset of mappings to the official ones, it does not modify them in any way.
+
+If you ever wish to modify one of these mappings, you will need to send a PR directly to the SDL project. The changes will get pulled in the community db when a new SDL release occurs.
 
 # For Contributors
 ## Check Your Mappings
