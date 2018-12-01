@@ -35,7 +35,7 @@ import copy
 FILE_HEADER = "# Game Controller DB for SDL in %s format\n" \
         "# Source: https://github.com/gabomdq/SDL_GameControllerDB\n"
 
-sdl_version = "2.0.8"
+sdl_version = "2.0.9"
 
 mappings_dict = OrderedDict([
     ("Windows", {}),
