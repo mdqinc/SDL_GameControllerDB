@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 
+/**
+ * @author XenoAmess
+ */
 public class SDL_GameControllerDB_Util {
     private static String SDL_GameControllerDB = null;
 
