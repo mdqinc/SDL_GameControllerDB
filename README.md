@@ -39,10 +39,12 @@ The controllermap utility provided with SDL2 is the official tool to create thes
 In Steam's Big Picture mode, configure your joystick. Then look in `[steam_installation_directory]/config/config.vdf` in your Steam installation directory for the `SDL_GamepadBind` entry. It is one of the last entries, it will look something like this.
 
 ```
-"SDL_GamepadBind"		"030000004c050000c405000000010000,PS4 Controller,a:b1,b:b2,back:b8,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,guide:b12,leftshoulder:b4,leftstick:b10,lefttrigger:a3,leftx:a0,lefty:a1,rightshoulder:b5,rightstick:b11,righttrigger:a4,rightx:a2,righty:a5,start:b9,x:b0,y:b3,"
+"SDL_GamepadBind"		"03000000d11800000094000011010000,dev:gen:Google Stadia Controller,platform:Linux,a:b0,b:b1,y:b3,x:b2,start:b7,guide:b8,back:b6,leftstick:b9,rightstick:b10,leftshoulder:b4,rightshoulder:b5,dpup:h0.1,dpleft:h0.8,dpdown:h0.4,dpright:h0.2,leftx:a0,lefty:a1,rightx:a2,righty:a3,lefttrigger:b14,righttrigger:b13,"
 ```
 
-Unfortunately, **Steam does not output the platform field**, so you will need to add it manually. At the end of the generated entry, add `platform:Windows,` or `platform:Mac OS X,` or `platform:Linux,` (with the trailing comma).
+Unfortunately, Steam outputs the platform field at the beginning, so you will need to move it to the end manually. Move `platform:Windows,` or `platform:Mac OS X,` or `platform:Linux,` to the end of the mapping (with the trailing comma).
+
+You will also need to remove "dev:gen:" from the beginning, if present.
 
 ## Standard Mappings
 Some controllers are a little tricky to figure out. Here are the recommended mappings.
