@@ -1,8 +1,5 @@
 # SDL_GameControllerDB
 
-PSA: This is a modified clone of https://github.com/gabomdq/SDL_GameControllerDB/ with the bogus DMCA claimed elements
-removed. A DMCA counter noticed has been filed.
-
 A community sourced database of game controller mappings to be used with SDL2 Game Controller functionality.
 
 # Usage
