@@ -22,6 +22,9 @@ It is comprised of a controller GUID (`030000004c050000c405000000010000`), a nam
 ## Mapping Tools
 There are a few different tools that let you create mappings.
 
+### [GNOME Games](https://wiki.gnome.org/Apps/Games)
+GNOME Games allows users to configure their own gamepads. The gamepad file the user generates is located at `~/.var/app/org.gnome.Games/config/libmanette/gamecontrollerdb` when installed from the flatpak. (GNU/Linux)
+
 ### [SDL2 Gamepad Tool](http://www.generalarcade.com/gamepadtool/)
 Third party cross-platform tool with GUI (Windows, macOS and Linux). Likely the easiest tool to use.
 
