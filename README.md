@@ -19,6 +19,8 @@ A mapping looks like this :
 ```
 It is comprised of a controller GUID (`030000004c050000c405000000010000`), a name (`PS4 Controller`), button / axis mappings (`leftshoulder:b4`) and a platform (`platform:Mac OS X`).
 
+Please make sure to check that the name is a good description of the controller. If relevant, include the controller's name and model number.
+
 ## Mapping Tools
 There are a few different tools that let you create mappings.
 
@@ -31,16 +33,15 @@ The controllermap utility provided with SDL2 is the official tool to create thes
 ### [Steam](http://store.steampowered.com)
 In Steam's Big Picture mode, configure your joystick. Then look in `[steam_installation_directory]/config/config.vdf` in your Steam installation directory for the `SDL_GamepadBind` entry. It is one of the last entries, it will look something like this.
 
-### [GNOME Games](https://wiki.gnome.org/Apps/Games)
-GNOME Games allows users to configure their own gamepads. The gamepad file the user generates is located at `~/.var/app/org.gnome.Games/config/libmanette/gamecontrollerdb` when installed from the flatpak. (GNU/Linux)
-
 ```
 "SDL_GamepadBind"		"030000004c050000c405000000010000,PS4 Controller,platform:Windows,a:b1,b:b2,back:b8,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,guide:b12,leftshoulder:b4,leftstick:b10,lefttrigger:a3,leftx:a0,lefty:a1,rightshoulder:b5,rightstick:b11,righttrigger:a4,rightx:a2,righty:a5,start:b9,x:b0,y:b3,"
 ```
 
 Unfortunately, Steam outputs the platform field at the beginning, so you will need to move it to the end manually. Move `platform:Windows,` or `platform:Mac OS X,` or `platform:Linux,` to the end of the mapping (with the trailing comma).
 
-You will also need check that the name is a good description of the controller. If relevant, include the controller's name and model number.
+### [GNOME Games](https://wiki.gnome.org/Apps/Games)
+GNOME Games allows users to configure their own gamepads. The gamepad file the user generates is located at `~/.var/app/org.gnome.Games/config/libmanette/gamecontrollerdb` when installed from the flatpak. (GNU/Linux)
+
 
 ## Resources
 
