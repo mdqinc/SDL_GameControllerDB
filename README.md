@@ -19,6 +19,8 @@ A mapping looks like this :
 ```
 It is comprised of a controller GUID (`030000004c050000c405000000010000`), a name (`PS4 Controller`), button / axis mappings (`leftshoulder:b4`) and a platform (`platform:Mac OS X`).
 
+Please make sure to check that the name is a good description of the controller. If relevant, include the controller's name and model number.
+
 ## Mapping Tools
 There are a few different tools that let you create mappings.
 
@@ -37,7 +39,9 @@ In Steam's Big Picture mode, configure your joystick. Then look in `[steam_insta
 
 Unfortunately, Steam outputs the platform field at the beginning, so you will need to move it to the end manually. Move `platform:Windows,` or `platform:Mac OS X,` or `platform:Linux,` to the end of the mapping (with the trailing comma).
 
-You will also need check that the name is a good description of the controller. If relevant, include the controller's name and model number.
+### [GNOME Games](https://wiki.gnome.org/Apps/Games)
+GNOME Games allows users to configure their own gamepads. The gamepad file the user generates is located at `~/.var/app/org.gnome.Games/config/libmanette/gamecontrollerdb` when installed from the flatpak. (GNU/Linux)
+
 
 ## Resources
 
