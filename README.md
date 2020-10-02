@@ -25,7 +25,7 @@ Please make sure to check that the name is a good description of the controller.
 There are a few different tools that let you create mappings.
 
 ### [SDL2 Gamepad Tool](http://www.generalarcade.com/gamepadtool/)
-Third party cross-platform tool with GUI (Windows, macOS and Linux). Likely the easiest tool to use.
+Third party cross-platform tool with GUI (Windows, macOS and Linux), Likely the easiest tool to use.
 
 ### [SDL2 ControllerMap](https://www.libsdl.org/download-2.0.php)
 The controllermap utility provided with SDL2 is the official tool to create these mappings, it runs on all the platforms SDL runs (Windows, Mac, Linux, iOS, Android, etc).
