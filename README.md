@@ -37,8 +37,6 @@ In Steam's Big Picture mode, configure your joystick. Then look in `[steam_insta
 "SDL_GamepadBind"		"030000004c050000c405000000010000,PS4 Controller,platform:Windows,a:b1,b:b2,back:b8,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,guide:b12,leftshoulder:b4,leftstick:b10,lefttrigger:a3,leftx:a0,lefty:a1,rightshoulder:b5,rightstick:b11,righttrigger:a4,rightx:a2,righty:a5,start:b9,x:b0,y:b3,"
 ```
 
-Unfortunately, Steam outputs the platform field at the beginning, so you will need to move it to the end manually. Move `platform:Windows,` or `platform:Mac OS X,` or `platform:Linux,` to the end of the mapping (with the trailing comma).
-
 ### [GNOME Games](https://wiki.gnome.org/Apps/Games)
 GNOME Games allows users to configure their own gamepads. The gamepad file the user generates is located at `~/.var/app/org.gnome.Games/config/libmanette/gamecontrollerdb` when installed from the flatpak. (GNU/Linux)
 
