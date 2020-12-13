@@ -1,4 +1,4 @@
-# Game Controller DB for SDL in 2.0.9 format
+# Game Controller DB for SDL in 2.0.14 format
 # Source: https://github.com/gabomdq/SDL_GameControllerDB
 
 # Windows
