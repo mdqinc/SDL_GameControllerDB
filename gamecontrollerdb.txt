@@ -291,7 +291,7 @@
 0300000000050000289b000000000000,Saturn_Adapter_2.0,a:b1,b:b2,leftshoulder:b6,lefttrigger:b4,leftx:a0,lefty:a1,rightshoulder:b7,righttrigger:b5,start:b9,x:b0,y:b3,platform:Windows,
 030000009b2800000500000000000000,Saturn_Adapter_2.0,a:b1,b:b2,leftshoulder:b6,lefttrigger:b4,leftx:a0,lefty:a1,rightshoulder:b7,righttrigger:b5,start:b9,x:b0,y:b3,platform:Windows,
 03000000a30c00002500000000000000,Sega Genesis Mini 3B controller,a:b2,b:b1,start:b9,dpup:-a4,dpdown:+a4,dpleft:-a3,dpright:+a3,righttrigger:b5,platform:Windows,
-03000000a30c000024000000000000000,Sega Mega Drive Mini 6B controller,a:b2,b:b1,start:b9,dpup:-a4,dpdown:+a4,dpleft:-a3,dpright:+a3,rightshoulder:b4,righttrigger:b5,x:b3,y:b0,platform:Windows,
+03000000a30c00002400000000000000,Sega Mega Drive Mini 6B controller,a:b2,b:b1,start:b9,dpup:-a4,dpdown:+a4,dpleft:-a3,dpright:+a3,rightshoulder:b4,righttrigger:b5,x:b3,y:b0,platform:Windows,
 030000005e0400008e02000000007801,ShanWan PS3/PC Wired GamePad,a:b0,b:b1,back:b6,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,guide:b10,leftshoulder:b4,leftstick:b8,lefttrigger:a2,leftx:a0,lefty:a1,rightshoulder:b5,rightstick:b9,righttrigger:a5,rightx:a3,righty:a4,start:b7,x:b2,y:b3,platform:Windows,
 03000000341a00000208000000000000,SL-6555-SBK,a:b0,b:b1,back:b6,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,leftshoulder:b4,leftstick:b8,lefttrigger:-a4,leftx:a0,lefty:a1,rightshoulder:b5,rightstick:b9,righttrigger:a4,rightx:a3,righty:a2,start:b7,x:b2,y:b3,platform:Windows,
 03000000341a00000908000000000000,SL-6566,a:b0,b:b1,back:b8,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,leftshoulder:b4,leftstick:b10,lefttrigger:b6,leftx:a0,lefty:a1,rightshoulder:b5,rightstick:b11,righttrigger:b7,rightx:a2,righty:a3,start:b9,x:b2,y:b3,platform:Windows,
