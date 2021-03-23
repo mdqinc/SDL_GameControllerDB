@@ -40,6 +40,9 @@ In Steam's Big Picture mode, configure your joystick. Then look in `[steam_insta
 ### [GNOME Games](https://wiki.gnome.org/Apps/Games)
 GNOME Games allows users to configure their own gamepads. The gamepad file the user generates is located at `~/.var/app/org.gnome.Games/config/libmanette/gamecontrollerdb` when installed from the flatpak. (GNU/Linux)
 
+### [SDL2 Gamepad Mapper](https://gitlab.com/ryochan7/sdl2-gamepad-mapper)
+Open source replacement for older SDL2 Gamepad Tool.
+
 
 ## Resources
 
