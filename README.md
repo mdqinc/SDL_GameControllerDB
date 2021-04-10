@@ -24,6 +24,9 @@ Please make sure to check that the name is a good description of the controller.
 ## Mapping Tools
 There are a few different tools that let you create mappings.
 
+### [AntiMicroX](https://github.com/AntiMicroX/antimicrox/)
+GUI tool for configuring controller profiles in GNU/Linux and generating SDL2 controller porfiles.
+
 ### [SDL2 Gamepad Tool](http://www.generalarcade.com/gamepadtool/)
 Third party cross-platform tool with GUI (Windows, macOS and Linux). Likely the easiest tool to use.
 
