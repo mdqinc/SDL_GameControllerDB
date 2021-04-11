@@ -41,7 +41,7 @@ In Steam's Big Picture mode, configure your joystick. Then look in `[steam_insta
 ```
 
 ### Additional Tools
-[GNOME Games]((https://wiki.gnome.org/Apps/Games)) allows users to configure their own gamepads in GNU/Linux. The gamepad file the user generates is located at `~/.var/app/org.gnome.Games/config/libmanette/gamecontrollerdb` when installed from the flatpak. [AntiMicroX](https://github.com/AntiMicroX/antimicrox/) offers a GUI tool for configuring controller profiles in GNU/Linux and generating SDL2 controller porfiles.
+[GNOME Games](https://wiki.gnome.org/Apps/Games) allows users to configure their own gamepads in GNU/Linux. The gamepad file the user generates is located at `~/.var/app/org.gnome.Games/config/libmanette/gamecontrollerdb` when installed from the flatpak. [AntiMicroX](https://github.com/AntiMicroX/antimicrox/) offers a GUI tool for configuring controller profiles in GNU/Linux and generating SDL2 controller porfiles.
 
 
 ## Resources
