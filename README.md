@@ -27,6 +27,12 @@ There are a few different tools that let you create mappings.
 ### [SDL2 Gamepad Tool](http://www.generalarcade.com/gamepadtool/)
 Third party cross-platform tool with GUI (Windows, macOS and Linux). Likely the easiest tool to use.
 
+---
+#### [Notice](https://github.com/gabomdq/SDL_GameControllerDB/issues/476)
+The above tool, while convenient, has fallen out of date as SDL has amended and added additional features for gamepad support (#478). As such submitted maps authored with this tool now require greater scrutiny from the maintainers to ensure they will not break support for explicit mappings SDL project provides. 
+**Maintainers of this repo are seeking an alternative (for example the below tool) with *up to date binaries provided* to ease contribiution and maitenance of this DB. Please consider helping out!**
+---
+
 ### [SDL2 Gamepad Mapper](https://gitlab.com/ryochan7/sdl2-gamepad-mapper)
 Open source replacement for older SDL2 Gamepad Tool.
 
