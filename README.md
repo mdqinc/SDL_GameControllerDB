@@ -21,13 +21,17 @@ It includes controller GUID (`030000004c050000c405000000010000`), a name (`PS4 C
 
 Please make sure to check that the name is a good description of the controller. If relevant, include the controller's name and model number.
 
+## Mapping Guide
+
+![SDL Game Controller Mapping Guide](mapping_guide.png)
+
 ## Mapping Tools
 There are a few different tools that let you create mappings.
 
 ### [SDL2 Gamepad Tool](http://www.generalarcade.com/gamepadtool/)
 Third party cross-platform tool with GUI (Windows, macOS and Linux). Likely the easiest tool to use.
 
-#### Note: While convenient, this tool has fallen out of date as SDL has amended and added additional features for gamepad support: [#478](https://github.com/gabomdq/SDL_GameControllerDB/issues/476). As such, maps authored with this tool require greater scrutiny to ensure they will not break support for explicit mappings the SDL project provides. Maintainers of this repo are seeking an alternative (for example the tool immediately below) with up to date binaries provided to ease contribiution to and maitenance of this repo. If you use this database in production, please consider helping out!
+#### Note: While convenient, this tool has fallen out of date as SDL has amended and added additional features for gamepad support (see issue [#478](https://github.com/gabomdq/SDL_GameControllerDB/issues/476)). As such, maps authored with this tool require greater scrutiny to ensure they will not break support for explicit mappings the SDL project provides. Maintainers of this repo are seeking an alternative binary (for example the tool immediately below) with _up to date binaries_ provided in order to ease contribiution to and maitenance of this repo. If you use this database in production, please consider helping out.
 
 ### [SDL2 Gamepad Mapper](https://gitlab.com/ryochan7/sdl2-gamepad-mapper)
 
