@@ -697,8 +697,8 @@ xinput,XInput Controller,a:b0,b:b1,back:b6,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,
 030000007e0500001720000000000000,Nintendo Switch Online Controller,a:b0,b:b1,x:b2,y:b3,back:b8,start:b9,guide:b12,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,leftshoulder:b4,rightshoulder:b5,lefttrigger:b6,righttrigger:b7,platform:Windows,
 030000007e0500001920000000000000,Nintendo Switch N64 Controller,a:b1,b:b0,leftshoulder:b4,rightshoulder:b5,lefttrigger:b6,righttrigger:b10,start:b9,guide:b12,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,leftx:a0,lefty:a1,-righty:b7,+righty:b2,-rightx:b3,+rightx:b8,platform:Windows,
 03000000f70600000100000000000000,N64 Adaptoid,a:b0,b:b3,leftshoulder:b6,rightshoulder:b7,start:b8,lefttrigger:b9,leftx:a0,lefty:a1,-righty:b5,+righty:b1,-rightx:b4,+rightx:b2,dpup:b10,dpdown:b11,dpleft:b12,dpright:b13,platform:Windows,
-03000000c82d00000290000000000000,8Bitdo N64,a:b0,b:b1,start:b11,leftshoulder:b6,rightshoulder:b7,lefttrigger:b10,leftx:a0,lefty:a1,-righty:b8,+righty:b3,+leftx:b9,-leftx:b4,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,platform:Windows,
-03000000c82d00003038000000000000,8Bitdo N64,a:b0,b:b1,start:b11,leftshoulder:b6,rightshoulder:b7,lefttrigger:b10,leftx:a0,lefty:a1,-righty:b8,+righty:b3,+leftx:b9,-leftx:b4,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,platform:Windows,
+03000000c82d00000290000000000000,8Bitdo N64,a:b0,b:b1,start:b11,leftshoulder:b6,rightshoulder:b7,lefttrigger:b10,leftx:a0,lefty:a1,-righty:b8,+righty:b3,+rightx:b9,-rightx:b4,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,platform:Windows,
+03000000c82d00003038000000000000,8Bitdo N64,a:b0,b:b1,start:b11,leftshoulder:b6,rightshoulder:b7,lefttrigger:b10,leftx:a0,lefty:a1,-righty:b8,+righty:b3,+rightx:b9,-rightx:b4,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,platform:Windows,
 
 # Mac OS X
 030000008f0e00000300000009010000,2In1 USB Joystick,a:b2,b:b1,back:b8,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,leftshoulder:b4,leftstick:b10,lefttrigger:b6,leftx:a0,lefty:a1,rightshoulder:b5,rightstick:b11,righttrigger:b7,rightx:a2,righty:a3,start:b9,x:b3,y:b0,platform:Mac OS X,
