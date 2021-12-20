@@ -1322,6 +1322,7 @@ xinput,XInput Controller,a:b0,b:b1,back:b6,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,
 03000000380700008532000010010000,Madcatz Fightpad,a:b1,b:b2,y:b3,x:b0,start:b9,guide:b12,back:b8,leftshoulder:b4,rightshoulder:b6,dpup:h0.1,dpleft:h0.8,dpdown:h0.4,dpright:h0.2,lefttrigger:b5,righttrigger:b7,platform:Linux,
 03000000ad1b000003f5000033050000,Hori Fighting Stick VX,a:b0,b:b1,x:b2,y:b3,back:b8,guide:b10,start:b9,leftshoulder:b4,rightshoulder:b5,-leftx:h0.8,+leftx:h0.2,-lefty:h0.1,+lefty:h0.4,lefttrigger:b6,righttrigger:b7,platform:Linux,
 050000004c050000cc09000001000000,Sony DualShock 4,a:b1,b:b2,y:b3,x:b0,start:b9,guide:b12,back:b8,leftstick:b10,rightstick:b11,leftshoulder:b4,rightshoulder:b5,dpup:h0.1,dpleft:h0.8,dpdown:h0.4,dpright:h0.2,leftx:a0,lefty:a1,rightx:a2,righty:a5,lefttrigger:a3,righttrigger:a4,platform:Linux,
+03000000571d00002000000010010000,SNES PC Game Pad    SNES PC Game Pad   ,platform:Linux,x:b2,a:b0,b:b1,y:b3,back:b6,start:b7,leftshoulder:b4,rightshoulder:b5,leftx:a1,lefty:a0,
 
 # Android
 38653964633230666463343334313533,8BitDo Adapter,a:b0,b:b1,back:b15,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,leftshoulder:b9,leftstick:b7,lefttrigger:b17,leftx:a0,lefty:a1,rightshoulder:b10,rightstick:b8,righttrigger:b18,rightx:a2,righty:a3,start:b6,x:b2,y:b3,platform:Android,
