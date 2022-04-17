@@ -374,7 +374,7 @@
 030000005e0400000e00000000000000,Microsoft SideWinder Freestyle Pro,a:b0,b:b1,back:b9,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,leftshoulder:b6,lefttrigger:b7,leftx:a0,lefty:a1,rightshoulder:b2,righttrigger:b5,start:b8,x:b3,y:b4,platform:Windows,
 030000005e0400002700000000000000,Microsoft SideWinder Plug and Play,a:b0,b:b1,dpdown:+a1,dpleft:-a0,dpright:+a0,dpup:-a1,lefttrigger:b4,righttrigger:b5,x:b2,y:b3,platform:Windows,
 03000000280d00000202000000000000,Miller Lite Cantroller,a:b0,b:b1,back:b4,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,leftx:a0,lefty:a1,start:b5,x:b2,y:b3,platform:Windows,
-030000005b1c00002500000000000000,Mini,a:b3,b:b4,back:b7,leftshoulder:b2,leftx:a0,lefty:a1,rightshoulder:b5,start:b6,x:b0,y:b1,platform:Windows,
+030000005b1c00002500000000000000,Mini Fight Stick,a:b3,b:b4,back:b7,leftshoulder:b2,leftx:a0,lefty:a1,rightshoulder:b5,start:b6,x:b0,y:b1,platform:Windows,
 03000000ad1b000023f0000000000000,MLG,a:b0,b:b1,back:b7,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,leftshoulder:b4,leftstick:b8,lefttrigger:a3,leftx:a0,lefty:a1,rightshoulder:b5,rightstick:b9,righttrigger:a6,rightx:a3,righty:a4,start:b6,x:b2,y:b3,platform:Windows,
 03000000ad1b00003ef0000000000000,MLG Fightstick TE,a:b0,b:b1,back:b6,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,leftshoulder:b4,lefttrigger:b8,rightshoulder:b5,righttrigger:b9,start:b7,x:b2,y:b3,platform:Windows,
 03000000380700006382000000000000,MLG PS3 Controller,a:b1,b:b2,back:b8,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,guide:b12,leftshoulder:b4,leftstick:b10,lefttrigger:b6,leftx:a0,lefty:a1,rightshoulder:b5,rightstick:b11,righttrigger:b7,rightx:a2,righty:a3,start:b9,x:b0,y:b3,platform:Windows,
