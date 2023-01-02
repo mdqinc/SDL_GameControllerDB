@@ -28,7 +28,7 @@ Please make sure to check that the name is a good description of the controller.
 ## Mapping Tools
 There are a few different tools that let you create mappings.
 
-### [SDL2 Gamepad Mapper](https://gitlab.com/ryochan7/sdl2-gamepad-mapper)
+### [SDL2 Gamepad Mapper](https://gitlab.com/ryochan7/sdl2-gamepad-mapper/-/releases)
 Open source GUI app for authoring mappings. Builds available for Windows and Linux.
 
 ### [SDL2 Gamepad Tool](http://www.generalarcade.com/gamepadtool/)
