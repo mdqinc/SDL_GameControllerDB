@@ -397,6 +397,7 @@
 030000005e0400002800000000000000,Microsoft Dual Strike,a:b3,b:b2,back:b4,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,leftshoulder:b6,lefttrigger:b8,rightshoulder:b7,rightx:a0,righty:a1~,start:b5,x:b1,y:b0,platform:Windows,
 030000005e0400000300000000000000,Microsoft SideWinder,a:b0,b:b1,back:b9,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,leftshoulder:b6,lefttrigger:b7,leftx:a0,lefty:a1,rightshoulder:b5,righttrigger:b2,start:b8,x:b3,y:b4,platform:Windows,
 030000005e0400000700000000000000,Microsoft SideWinder,a:b0,b:b1,back:b8,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,leftshoulder:b6,lefttrigger:b7,leftx:a0,lefty:a1,rightshoulder:b5,righttrigger:b2,start:b9,x:b3,y:b4,platform:Windows,
+030000005e0400001b00000000000000,Microsoft SideWinder Force Feedback 2 Joystick,a:b7,b:b4,x:b6,y:b5,leftshoulder:b2,rightshoulder:b3,leftstick:b0,rightstick:b1,leftx:a2,lefty:a3,rightx:a0,righty:a1,dpup:h0.1,dpleft:h0.8,dpdown:h0.4,dpright:h0.2,platform:Windows,
 030000005e0400000e00000000000000,Microsoft SideWinder Freestyle Pro,a:b0,b:b1,back:b9,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,leftshoulder:b6,lefttrigger:b7,leftx:a0,lefty:a1,rightshoulder:b2,righttrigger:b5,start:b8,x:b3,y:b4,platform:Windows,
 030000005e0400002700000000000000,Microsoft SideWinder Plug and Play,a:b0,b:b1,dpdown:+a1,dpleft:-a0,dpright:+a0,dpup:-a1,lefttrigger:b4,righttrigger:b5,x:b2,y:b3,platform:Windows,
 03000000280d00000202000000000000,Miller Lite Cantroller,a:b0,b:b1,back:b4,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,leftx:a0,lefty:a1,start:b5,x:b2,y:b3,platform:Windows,
