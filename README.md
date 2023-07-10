@@ -37,7 +37,7 @@ Third party cross-platform tool with GUI (Windows, macOS and Linux)
 Open source GUI app for authoring mappings. Builds available for Windows and Linux.
 
 ### [SDL2 Game Controller Map](https://www.libsdl.org/download-2.0.php)
-The [gamepadmap](https://github.com/libsdl-org/SDL/blob/main/test/gamepadmap.c) utility provided with SDL2 is the official tool to create these mappings, it runs on all the platforms SDL runs (Windows, Mac, Linux, iOS, Android, etc).
+[Gamepadmap (SDL3)](https://github.com/libsdl-org/SDL/blob/main/test/gamepadmap.c) and [controllermap (SDL2)](https://github.com/libsdl-org/SDL/blob/SDL2/test/controllermap.c) utilities are the official tools to create these mappings on all SDL supported platforms (Windows, Mac, Linux, iOS, Android, etc).
 
 ### [Steam](http://store.steampowered.com)
 In Steam's Big Picture mode, configure your gamepad. Then look in `[steam_installation_directory]/config/config.vdf` in your Steam installation directory for the `SDL_GamepadBind` entry. It is one of the last entries, it will look something like this:
