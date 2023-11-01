@@ -28,6 +28,9 @@ Please make sure to check that the name is a good description of the controller.
 ## Mapping Tools
 There are a few different tools that let you create mappings.
 
+### [AntiMicroX](https://sourceforge.net/projects/antimicrox/)
+Open source GUI app for authoring mappings. Builds available for Windows, macOS and Linux.
+
 ### [SDL2 Gamepad Tool](http://www.generalarcade.com/gamepadtool/)
 Third party cross-platform tool with GUI (Windows, macOS and Linux)
 
@@ -36,8 +39,8 @@ Third party cross-platform tool with GUI (Windows, macOS and Linux)
 ### [SDL2 Gamepad Mapper](https://gitlab.com/ryochan7/sdl2-gamepad-mapper/-/releases)
 Open source GUI app for authoring mappings. Builds available for Windows and Linux.
 
-### [SDL2 Game Controller Map](https://www.libsdl.org/download-2.0.php)
-[Gamepadmap (SDL3)](https://github.com/libsdl-org/SDL/blob/main/test/gamepadmap.c) and [controllermap (SDL2)](https://github.com/libsdl-org/SDL/blob/SDL2/test/controllermap.c) utilities are the official tools to create these mappings on all SDL supported platforms (Windows, Mac, Linux, iOS, Android, etc).
+### [SDL](https://github.com/libsdl-org/SDL/releases/latest)
+[testcontroller (SDL3)](https://github.com/libsdl-org/SDL/blob/main/test/testcontroller.c) and [controllermap (SDL2)](https://github.com/libsdl-org/SDL/blob/SDL2/test/controllermap.c) utilities are the official tools to create these mappings on all SDL supported platforms (Windows, Mac, Linux, iOS, Android, etc).
 
 ### [Steam](http://store.steampowered.com)
 In Steam's Big Picture mode, configure your gamepad. Then look in `[steam_installation_directory]/config/config.vdf` in your Steam installation directory for the `SDL_GamepadBind` entry. It is one of the last entries, it will look something like this:
