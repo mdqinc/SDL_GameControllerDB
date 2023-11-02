@@ -28,9 +28,6 @@ Please make sure to check that the name is a good description of the controller.
 ## Mapping Tools
 There are a few different tools that let you create mappings.
 
-### [AntiMicroX](https://sourceforge.net/projects/antimicrox/)
-Open source GUI app for authoring mappings. Builds available for Windows, macOS and Linux.
-
 ### [SDL2 Gamepad Tool](http://www.generalarcade.com/gamepadtool/)
 Third party cross-platform tool with GUI (Windows, macOS and Linux)
 
