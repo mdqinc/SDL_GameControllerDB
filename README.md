@@ -6,8 +6,11 @@ A community sourced database of game controller mappings to be used with SDL2 Ga
 Download gamecontrollerdb.txt, place it in your app's directory and load it.
 
 For example :
-```
+```c
+// SDL2
 SDL_GameControllerAddMappingsFromFile("gamecontrollerdb.txt");
+// SDL3
+SDL_AddGamepadMappingsFromFile("gamecontrollerdb.txt");
 ```
 
 The database is compatible with SDL v2.0.10 and newer. Older SDL versions are no longer supported.
