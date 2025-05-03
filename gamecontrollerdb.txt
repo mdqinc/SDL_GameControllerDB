@@ -1807,6 +1807,7 @@ xinput,XInput Controller,a:b0,b:b1,back:b6,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,
 03000000120c0000101e000011010000,Zeroplus P4,a:b1,b:b2,back:b8,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,guide:b12,leftshoulder:b4,leftstick:b10,lefttrigger:a3,leftx:a0,lefty:a1,rightshoulder:b5,rightstick:b11,righttrigger:a4,rightx:a2,righty:a5,start:b9,x:b0,y:b3,platform:Linux,
 
 # Android
+64633735616665613536653363336132,Retroid Pocket,b:b0,a:b1,y:b2,x:b3,start:b6,leftstick:b7,rightstick:b8,leftshoulder:b9,rightshoulder:b10,back:b15,lefttrigger:a4,righttrigger:a5,paddle1:b19,paddle2:b20,leftx:a0,lefty:a1,rightx:a2,righty:a3,dpdown:b12,dpleft:b13,dpright:b14,dpup:b11,platform:Android,
 38653964633230666463343334313533,8BitDo Adapter,a:b0,b:b1,back:b15,dpdown:b12,dpleft:b13,dpright:b14,dpup:b11,leftshoulder:b9,leftstick:b7,lefttrigger:b17,leftx:a0,lefty:a1,rightshoulder:b10,rightstick:b8,righttrigger:b18,rightx:a2,righty:a3,start:b6,x:b2,y:b3,platform:Android,
 36666264316630653965636634386234,8BitDo Adapter 2,a:b0,b:b1,back:b15,dpdown:b12,dpleft:b13,dpright:b14,dpup:b11,guide:b19,leftshoulder:b9,leftstick:b7,lefttrigger:b17,leftx:a0,lefty:a1,rightshoulder:b10,rightstick:b8,righttrigger:b18,rightx:a2,righty:a3,start:b6,x:b2,y:b3,platform:Android,
 38426974446f20417263616465205374,8BitDo Arcade Stick,a:b0,b:b1,back:b15,dpdown:+a1,dpleft:-a0,dpright:+a0,dpup:-a1,guide:b5,leftshoulder:b9,lefttrigger:a4,rightshoulder:b10,righttrigger:a5,rightx:a2,righty:a3,start:b6,x:b2,y:b3,platform:Android,
