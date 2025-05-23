@@ -154,6 +154,7 @@
 03000000120c0000f10e000000000000,Brook PS2 Adapter,a:b1,b:b2,back:b13,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,leftshoulder:b4,leftstick:b10,lefttrigger:a3,leftx:a0,lefty:a1,rightshoulder:b5,rightstick:b11,righttrigger:a4,rightx:a2,righty:a5,start:b9,x:b0,y:b3,platform:Windows,
 03000000120c0000310c000000000000,Brook Super Converter,a:b2,b:b1,back:b8,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,leftshoulder:b6,lefttrigger:b4,leftx:a0,lefty:a1,rightshoulder:b7,righttrigger:b5,start:b9,x:b3,y:b0,platform:Windows,
 03000000d81d00000b00000000000000,Buffalo BSGP1601 Series,a:b5,b:b3,back:b12,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,leftshoulder:b8,leftstick:b10,lefttrigger:b6,leftx:a0,lefty:a1,rightshoulder:b9,rightstick:b11,righttrigger:b7,rightx:a2,righty:a3,start:b13,x:b4,y:b2,platform:Windows,
+030000005a1c00002400000000000000,Capcom Home Arcade Controller,a:b3,b:b4,back:b7,leftshoulder:b2,leftx:a0,lefty:a1,rightshoulder:b5,start:b6,x:b0,y:b1,platform:Windows,
 030000005b1c00002400000000000000,Capcom Home Arcade Controller,a:b3,b:b4,back:b7,leftshoulder:b2,leftx:a0,lefty:a1,rightshoulder:b5,start:b6,x:b0,y:b1,platform:Windows,
 030000005b1c00002500000000000000,Capcom Home Arcade Controller,a:b3,b:b4,back:b7,leftshoulder:b2,leftx:a0,lefty:a1,rightshoulder:b5,start:b6,x:b0,y:b1,platform:Windows,
 030000006d04000042c2000000000000,ChillStream,a:b0,b:b1,back:b6,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,leftshoulder:b4,leftstick:b8,leftx:a0,lefty:a1,rightshoulder:b5,rightstick:b9,rightx:a3,righty:a4,start:b7,x:b2,y:b3,platform:Windows,
