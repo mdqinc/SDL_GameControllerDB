@@ -47,5 +47,9 @@ Third party cross-platform tool with GUI (Windows, macOS and Linux)
 
 ## Resources
 
-* [SDL](http://www.libsdl.org)
-* [SDL_GameControllerAddMappingsFromFile](http://wiki.libsdl.org/SDL_GameControllerAddMappingsFromFile)
+### [SDL2](https://wiki.libsdl.org/SDL2/)
+* [Game Controller Support](https://wiki.libsdl.org/SDL2/CategoryGameController)
+* [SDL_GameControllerAddMappingsFromFile](https://wiki.libsdl.org/SDL2/SDL_GameControllerAddMappingsFromFile)
+### [SDL3](https://wiki.libsdl.org/SDL3/)
+* [Gamepad Support](https://wiki.libsdl.org/SDL3/CategoryGamepad)
+* [SDL_AddGamepadMappingsFromFile](https://wiki.libsdl.org/SDL3/SDL_AddGamepadMappingsFromFile)
