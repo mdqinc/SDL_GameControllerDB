@@ -41,10 +41,6 @@ Third party cross-platform tool with GUI (Windows, macOS and Linux)
 ### [SDL](https://github.com/libsdl-org/SDL/releases/latest)
 [testcontroller (SDL3)](https://github.com/libsdl-org/SDL/blob/main/test/testcontroller.c) and [controllermap (SDL2)](https://github.com/libsdl-org/SDL/blob/SDL2/test/controllermap.c) utilities are the official tools to create these mappings on all SDL supported platforms (Windows, Mac, Linux, iOS, Android, etc).
 
-```
-"SDL_GamepadBind"		"030000004c050000c405000000010000,PS4 Controller,platform:Windows,a:b1,b:b2,back:b8,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,guide:b12,leftshoulder:b4,leftstick:b10,lefttrigger:a3,leftx:a0,lefty:a1,rightshoulder:b5,rightstick:b11,righttrigger:a4,rightx:a2,righty:a5,start:b9,x:b0,y:b3,"
-```
-
 ## Resources
 
 ### [SDL2](https://wiki.libsdl.org/SDL2/)
