@@ -1,0 +1,8 @@
+sdl-gamecontrollerdb (0~git20260319.4a8d0f2-1~noble1) noble; urgency=medium
+
+  * Initial release.
+  * Package the upstream master snapshot of gamecontrollerdb.txt.
+  * Install the canonical database under /usr/share/sdl-gamecontrollerdb/.
+  * Ship a compatibility symlink in /usr/games/.
+
+ -- Reaper <JohnGrimmReaper@disroot.org>  Fri, 20 Mar 2026 20:00:00 -0300

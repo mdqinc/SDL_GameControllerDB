@@ -1,0 +1,18 @@
+Source: sdl-gamecontrollerdb
+Section: games
+Priority: optional
+Maintainer: Reaper <JohnGrimmReaper@disroot.org>
+Build-Depends: debhelper-compat (= 13)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/mdqinc/SDL_GameControllerDB
+
+Package: sdl-gamecontrollerdb
+Architecture: all
+Multi-Arch: foreign
+Depends: ${misc:Depends}
+Description: community-sourced SDL game controller mapping database
+ This package provides gamecontrollerdb.txt, a community-maintained
+ database of controller mappings for SDL2 and SDL3 applications.
+ It installs the canonical database in /usr/share/sdl-gamecontrollerdb/
+ and also provides a compatibility symlink in /usr/games/.

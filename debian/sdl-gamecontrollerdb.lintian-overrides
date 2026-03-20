@@ -1,0 +1,5 @@
+# gamecontrollerdb.txt is package data, not documentation.
+sdl-gamecontrollerdb binary: package-contains-documentation-outside-usr-share-doc [usr/share/sdl-gamecontrollerdb/gamecontrollerdb.txt]
+
+# This package intentionally provides a compatibility symlink in /usr/games/.
+sdl-gamecontrollerdb binary: no-manual-page [usr/games/gamecontrollerdb.txt]
