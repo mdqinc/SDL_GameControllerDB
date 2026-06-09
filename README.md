@@ -47,9 +47,7 @@ First, please confirm for yourself
 - An acceptable mapping is not [already present in the DB](https://github.com/mdqinc/SDL_GameControllerDB/blob/master/gamecontrollerdb.txt), searching by platform and GUID
 - Adding the mapping to the db improves, and does not degrade, the experience of using the gamepad
 
-Contribute by [opening a pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request), or [creating an issue](https://github.com/mdqinc/SDL_GameControllerDB/issues/new)
-
-If you are opening a pull request, ensure ["Allow edits from maintainers"](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/allowing-changes-to-a-pull-request-branch-created-from-a-fork) is enabled for your fork
+Contribute by [opening a pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request), or [creating an issue](https://github.com/mdqinc/SDL_GameControllerDB/issues/new). If you are opening a pull request, ensure ["Allow edits from maintainers"](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/allowing-changes-to-a-pull-request-branch-created-from-a-fork) is enabled on your fork.
 
 ## Resources
 
