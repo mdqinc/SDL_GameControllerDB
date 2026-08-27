@@ -6,6 +6,6 @@ jobs:
   duplicates:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - run: |
-        python duplicates.py
+      - uses: actions/checkout@v7
+      - run: |
+          python duplicates.py
